@@ -10,8 +10,8 @@ var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDb
 builder.Services.AddDbContext<ATSBIdentityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ATSBIdentityDbContext>();
+// builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//     .AddEntityFrameworkStores<ATSBIdentityDbContext>();
 
 // Add services to the container.
 
