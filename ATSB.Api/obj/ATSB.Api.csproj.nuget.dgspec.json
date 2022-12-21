@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/cano/CanoSoft/ATSB/ATSB.Api/ATSB.Api.csproj": {}
+    "/Users/cano/CanoSoft/ATSB-BackEnd/ATSB.Api/ATSB.Api.csproj": {}
   },
   "projects": {
-    "/Users/cano/CanoSoft/ATSB/ATSB.Api/ATSB.Api.csproj": {
+    "/Users/cano/CanoSoft/ATSB-BackEnd/ATSB.Api/ATSB.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/cano/CanoSoft/ATSB/ATSB.Api/ATSB.Api.csproj",
+        "projectUniqueName": "/Users/cano/CanoSoft/ATSB-BackEnd/ATSB.Api/ATSB.Api.csproj",
         "projectName": "ATSB",
-        "projectPath": "/Users/cano/CanoSoft/ATSB/ATSB.Api/ATSB.Api.csproj",
+        "projectPath": "/Users/cano/CanoSoft/ATSB-BackEnd/ATSB.Api/ATSB.Api.csproj",
         "packagesPath": "/Users/cano/.nuget/packages/",
-        "outputPath": "/Users/cano/CanoSoft/ATSB/ATSB.Api/obj/",
+        "outputPath": "/Users/cano/CanoSoft/ATSB-BackEnd/ATSB.Api/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
