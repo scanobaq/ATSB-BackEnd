@@ -80,6 +80,13 @@ async void seeddata(IHost app)
     }
 }
 
+app.UseCors(options =>
+           {
+               options.WithOrigins("http://localhost:3000");
+               options.AllowAnyMethod();
+               options.AllowAnyHeader();
+           });
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
