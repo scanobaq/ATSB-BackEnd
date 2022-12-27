@@ -1,5 +1,5 @@
 using ATSB.Api.Areas.Identity.Entities.Security;
-using ATSB.Areas.Identity.Data;
+using ATSB.Api.Areas.Identity.Data;
 using ATSB.Helpers;
 
 namespace ATSB.Api.Areas.Identity.Data
