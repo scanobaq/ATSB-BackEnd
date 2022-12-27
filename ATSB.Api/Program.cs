@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ATSB.Areas.Identity.Data;
+using ATSB.Api.Areas.Identity.Data;
 using ATSB.Api.Areas.Identity.Entities.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ATSB.Api.Areas.Identity.Data;
 using ATSB.Helpers;
+using ATSB.Api.Areas.Repositories.Parametros;
+using ATSB.Api.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -48,6 +50,20 @@ builder.Services.AddIdentity<UserAtsb, IdentityRole>(options =>
 
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
+builder.Services.AddScoped<IConsecutivoHelper, ConsecutivoHelper>();
+
+builder.Services.AddScoped<IParEstadoRepository, ParEstadoRepository>();
+builder.Services.AddScoped<IParPaisRepository, ParPaisRepository>();
+builder.Services.AddScoped<IParTipoIdentificacionRepository , ParTipoIdentificacionRepository>();
+builder.Services.AddScoped<IParEmpresaRepository, ParEmpresaRepository>();
+builder.Services.AddScoped<IParConsecutivoRepository, ParConsecutivoRepository>();
+builder.Services.AddScoped<IParProcesoRepository, ParProcesoRepository>();
+builder.Services.AddScoped<IParTipoOrigenDatosRepository, ParTipoOrigenDatosRepository>();
+builder.Services.AddScoped<IParCalificacionRiesgoRepository,ParCalificacionRiesgoRepository>();
+builder.Services.AddScoped<IParMonedaRepository, ParMonedaRepository>();
+builder.Services.AddScoped<IParTipoCambioRepository, ParTipoCambioRepository>();
+builder.Services.AddScoped<IParSucursalRepository, ParSucursalRepository>();
+
 
 var app = builder.Build();
 
