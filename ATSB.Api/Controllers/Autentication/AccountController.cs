@@ -5,21 +5,26 @@ using ATSB.Api.Areas.Identity.Entities.Security;
 using ATSB.Areas.Identity.Data;
 using ATSB.Helpers;
 using ATSB.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
-namespace ATSB.Api.Controllers.Autentication
+namespace ATSB.Controllers
 {
-    public class AcountController : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+    public class AccountController : ControllerBase
     {
 
         private readonly IUserHelper _userHelper;
         private readonly IConfiguration _configuration;
         private readonly ATSBIdentityDbContext _dbContext;
 
-        public AcountController(IUserHelper userHelper, IConfiguration configuration, ATSBIdentityDbContext dbContext)
+        public AccountController(IUserHelper userHelper, IConfiguration configuration, ATSBIdentityDbContext dbContext)
         {
             _userHelper = userHelper;
             _configuration = configuration;
@@ -73,7 +78,6 @@ namespace ATSB.Api.Controllers.Autentication
             });
 
         }
-
 
         [HttpPost("CreateToken")]
         [AllowAnonymous]
