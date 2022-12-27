@@ -4,6 +4,7 @@ using ATSB.Api.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATSB.Migrations
 {
     [DbContext(typeof(ATSBIdentityDbContext))]
-    partial class ATSBIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208195050_alterTableUsersAspNet")]
+    partial class alterTableUsersAspNet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
