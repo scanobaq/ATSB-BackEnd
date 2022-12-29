@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ATSB.Api.Areas.Identity.Entities.Security;
-using ATSB.Areas.Identity.Data;
+using ATSB.Api.Areas.Identity.Data;
 using ATSB.Helpers;
 using ATSB.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
