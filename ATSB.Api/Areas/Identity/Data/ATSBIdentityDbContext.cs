@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ATSB.Api.Areas.Entities.Parametros;
-using ATSB.Api.Areas.Entities.Configuracion;
 
 namespace ATSB.Api.Areas.Identity.Data
 {
-    public partial class ATSBIdentityDbContext : DbContext
+    public partial class ATSBIdentityDbContext : IdentityDbContext<UserAtsb>
     {
-        public ATSBIdentityDbContext()
-        {
-        }
-
         public ATSBIdentityDbContext(DbContextOptions<ATSBIdentityDbContext> options)
             : base(options)
         {
@@ -44,6 +39,9 @@ namespace ATSB.Api.Areas.Identity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityUser>().ToTable("UserAtsb");
+
             modelBuilder.Entity<ParEstado>(entity =>
             {
                 entity.HasKey(e => e.CodigoEstado);
