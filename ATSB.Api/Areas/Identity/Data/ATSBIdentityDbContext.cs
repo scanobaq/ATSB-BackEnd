@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ATSB.Api.Areas.Entities.Parametros;
+using ATSB.Api.Areas.Entities.Configuracion;
 
 namespace ATSB.Api.Areas.Identity.Data
 {
@@ -28,6 +29,18 @@ namespace ATSB.Api.Areas.Identity.Data
         public virtual DbSet<ParMonedum> ParMoneda { get; set; }
         public virtual DbSet<ParTipocambio> ParTipocambios { get; set; }
         public virtual DbSet<ParSucursal> ParSucursals { get; set; }
+        public virtual DbSet<CnfCalificacionriesgoequivalencium> CnfCalificacionriesgoequivalencia { get; set; }
+        public virtual DbSet<CnfTablagenerica> CnfTablagenericas { get; set; }
+        public virtual DbSet<CnfTablagenericacampo> CnfTablagenericacampos { get; set; }
+        public virtual DbSet<CnfTabla> CnfTablas { get; set; }
+        public virtual DbSet<CnfTablavalor> CnfTablavalors { get; set; }
+        public virtual DbSet<CnfArchivo> CnfArchivos { get; set; }
+        public virtual DbSet<CnfArchivocampo> CnfArchivocampos { get; set; }
+        public virtual DbSet<CnfTablagenericavalore> CnfTablagenericavalores { get; set; }
+        public virtual DbSet<CnfEjecucionreporte> CnfEjecucionreportes { get; set; }
+        public virtual DbSet<CnfRangomontoencabezado> CnfRangomontoencabezados { get; set; }
+        public virtual DbSet<CnfEjecucionproceso> CnfEjecucionprocesos { get; set; }
+        public virtual DbSet<CnfRangomontodetalle> CnfRangomontodetalles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -461,6 +474,416 @@ namespace ATSB.Api.Areas.Identity.Data
                     .WithMany(p => p.ParSucursals)
                     .HasForeignKey(d => d.CodigoEstado)
                     .HasConstraintName("PAR_ESTADO_PAR_SUCURSAL");
+            });
+
+            modelBuilder.Entity<CnfCalificacionriesgoequivalencium>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CalificacionOrigen });
+
+                entity.ToTable("CNF_CALIFICACIONRIESGOEQUIVALENCIA");
+
+                entity.Property(e => e.CalificacionOrigen)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CalificacionDestino)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfCalificacionriesgoequivalencia)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_CALIFICACIONRIESGOEQUIVALENCIA");
+            });
+
+            modelBuilder.Entity<CnfTablagenerica>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdTabla });
+
+                entity.ToTable("CNF_TABLAGENERICA");
+
+                entity.HasIndex(e => new { e.CodigoEmpresa, e.TablaParametros }, "IDX_TABLAGENERICA_TABLAPARAMETRO");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.TablaParametros)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfTablagenericas)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_TABLAGENERICA");
+            });
+
+            modelBuilder.Entity<CnfTablagenericacampo>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdTabla, e.IdCampo });
+
+                entity.ToTable("CNF_TABLAGENERICACAMPOS");
+
+                entity.Property(e => e.IdCampo)
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Etiqueta)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCampo)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CnfTablagenerica)
+                    .WithMany(p => p.CnfTablagenericacampos)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.IdTabla })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_TABLAGENERICA_CNF_TABLAGENERICACAMPOS");
+            });
+
+            modelBuilder.Entity<CnfTabla>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTabla });
+
+                entity.ToTable("CNF_TABLA");
+
+                entity.HasIndex(e => new { e.CodigoEmpresa, e.Tabla }, "IDX_CNF_TABLA_CODIGOEMPRESA_TABLA");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tabla)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfTablas)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_TABLA");
+            });
+
+            modelBuilder.Entity<CnfTablavalor>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTabla, e.IdValor });
+
+                entity.ToTable("CNF_TABLAVALOR");
+
+                entity.Property(e => e.Codigo)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Valor)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfTablavalors)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_ESTADO_CNF_TABLAVALOR");
+
+                entity.HasOne(d => d.CodigoNavigation)
+                    .WithMany(p => p.CnfTablavalors)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTabla })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_TABLA_CNF_TABLAVALOR");
+            });
+
+            modelBuilder.Entity<CnfArchivo>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdArchivo });
+
+                entity.ToTable("CNF_ARCHIVO");
+
+                entity.Property(e => e.DescripcionArchivo)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreArchivo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TablaDestino)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfArchivos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_ARCHIVO");
+            });
+
+            modelBuilder.Entity<CnfArchivocampo>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdArchivo, e.IdCampo });
+
+                entity.ToTable("CNF_ARCHIVOCAMPO");
+
+                entity.Property(e => e.CondicionPatron)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NombreCampo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NombrePatron)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Patron)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfArchivocampos)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_CNF_ARCHIVOCAMPO");
+
+                entity.HasOne(d => d.CnfArchivo)
+                    .WithMany(p => p.CnfArchivocampos)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.IdArchivo })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_ARCHIVO_CNF_ARCHIVOCAMPO");
+            });
+
+            modelBuilder.Entity<CnfTablagenericavalore>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdTabla, e.IdValor });
+
+                entity.ToTable("CNF_TABLAGENERICAVALORES");
+
+                entity.HasIndex(e => new { e.CodigoEmpresa, e.IdValor }, "IDX_CNF_TABLAGENERICAVALORES_EMPRESA_IDVALOR");
+
+                entity.Property(e => e.CodigoValor)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion1)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion2)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion3)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion4)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion5)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfTablagenericavalores)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_CNF_TABLAGENERICAVALORES");
+
+                entity.HasOne(d => d.CnfTablagenerica)
+                    .WithMany(p => p.CnfTablagenericavalores)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.IdTabla })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_TABLAGENERICA_CNF_TABLAGENERICAVALORES");
+            });
+
+            modelBuilder.Entity<CnfEjecucionreporte>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Id });
+
+                entity.ToTable("CNF_EJECUCIONREPORTES");
+
+                entity.Property(e => e.Campos)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Condicion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NombreHoja)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tabla)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Titulo)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfEjecucionreportes)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_EJECUCIONREPORTES");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfEjecucionreportes)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_CNF_EJECUCIONREPORTES");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.CnfEjecucionreportes)
+                    .HasForeignKey(d => new { d.CodigoOrigenDatosSalida, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_TIPOORIGENDATOS_CNF_EJECUCIONREPORTES");
+            });
+
+            modelBuilder.Entity<CnfRangomontoencabezado>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTabla });
+
+                entity.ToTable("CNF_RANGOMONTOENCABEZADO");
+
+                entity.Property(e => e.DescripcionProceso)
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreTabla)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfRangomontoencabezados)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_RANGOMONTOENCABEZADO");
+            });
+
+            modelBuilder.Entity<CnfEjecucionproceso>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoProceso, e.SecuenciaProceso });
+
+                entity.ToTable("CNF_EJECUCIONPROCESOS");
+
+                entity.Property(e => e.Condicion)
+                    .HasMaxLength(512)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DescripcionOrigenDatos)
+                    .HasMaxLength(4000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EjecutaProcedimiento)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TablaDestino)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfEjecucionprocesos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_EJECUCIONPROCESOS");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfEjecucionprocesos)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_CNF_EJECUCIONPROCESOS");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.CnfEjecucionprocesos)
+                    .HasForeignKey(d => new { d.CodigoOrigenDatos, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_TIPOORIGENDATOS_CNF_EJECUCIONPROCESOS");
+
+                entity.HasOne(d => d.CodigoNavigation)
+                    .WithMany(p => p.CnfEjecucionprocesos)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_PROCESO_CNF_EJECUCIONPROCESOS");
+            });
+
+            modelBuilder.Entity<CnfRangomontodetalle>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTabla, e.CodigoRango });
+
+                entity.ToTable("CNF_RANGOMONTODETALLE");
+
+                entity.Property(e => e.CodigoRango)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.RangoValor)
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CnfRangomontodetalles)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CNF_RANGOMONTODETALLE");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.CnfRangomontodetalles)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_CNF_RANGOMONTODETALLE");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.CnfRangomontodetalles)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTabla })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_RANGOMONTOENCABEZADO_CNF_RANGOMONTODETALLE");
             });
 
             OnModelCreatingPartial(modelBuilder);
