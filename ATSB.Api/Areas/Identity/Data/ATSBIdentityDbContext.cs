@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ATSB.Api.Areas.Entities.Parametros;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ATSB.Api.Areas.Identity.Entities.Security;
+using ATSB.Api.Areas.Entities.Configuracion;
+using Microsoft.AspNetCore.Identity;
 
 namespace ATSB.Api.Areas.Identity.Data
 {
