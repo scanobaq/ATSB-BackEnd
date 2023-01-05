@@ -8,6 +8,7 @@ using ATSB.Api.Areas.Identity.Data;
 using ATSB.Helpers;
 using ATSB.Api.Areas.Repositories.Parametros;
 using ATSB.Api.Helpers;
+using ATSB.Api.Areas.Repositories.Configuracion;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -63,7 +64,18 @@ builder.Services.AddScoped<IParCalificacionRiesgoRepository,ParCalificacionRiesg
 builder.Services.AddScoped<IParMonedaRepository, ParMonedaRepository>();
 builder.Services.AddScoped<IParTipoCambioRepository, ParTipoCambioRepository>();
 builder.Services.AddScoped<IParSucursalRepository, ParSucursalRepository>();
-
+builder.Services.AddScoped<ICnfCalificacionRiesgoEquivalenciaRepository, CnfCalificacionRiesgoEquivalenciaRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaRepository, CnfTablaGenericaRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaCamposRepository, CnfTablaGenericaCamposRepository>();
+builder.Services.AddScoped<ICnfTablaRepository, CnfTablaRepository>();
+builder.Services.AddScoped<ICnfTablaValorRepository, CnfTablaValorRepository>();
+builder.Services.AddScoped<ICnfArchivoRepository, CnfArchivoRepository>();
+builder.Services.AddScoped<ICnfArchivoCampoRepository,CnfArchivoCampoRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaValoresRepository, CnfTablaGenericaValoresRepository>();
+builder.Services.AddScoped<ICnfEjecucionReportesRepository, CnfEjecucionReportesRepository>();
+builder.Services.AddScoped<ICnfRangoMontoEncabezadoRepository, CnfRangoMontoEncabezadoRepository>();
+builder.Services.AddScoped<ICnfEjecucionProcesosRepository, CnfEjecucionProcesosRepository>();
+builder.Services.AddScoped<ICnfRangoMontoDetalleRepository, CnfRangoMontoDetalleRepository>();
 
 var app = builder.Build();
 

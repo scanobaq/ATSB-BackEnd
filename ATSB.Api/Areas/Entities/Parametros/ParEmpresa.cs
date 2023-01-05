@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ATSB.Api.Areas.Entities.Configuracion;
 
 namespace ATSB.Api.Areas.Entities.Parametros
 {
@@ -17,6 +18,14 @@ namespace ATSB.Api.Areas.Entities.Parametros
             ParMoneda = new HashSet<ParMonedum>();
             ParTipocambios = new HashSet<ParTipocambio>();
             ParSucursals = new HashSet<ParSucursal>();
+            CnfCalificacionriesgoequivalencia = new HashSet<CnfCalificacionriesgoequivalencium>();
+            CnfTablagenericas = new HashSet<CnfTablagenerica>();
+            CnfTablas = new HashSet<CnfTabla>();
+            CnfArchivos = new HashSet<CnfArchivo>();
+            CnfEjecucionreportes = new HashSet<CnfEjecucionreporte>();
+            CnfRangomontoencabezados = new HashSet<CnfRangomontoencabezado>();
+            CnfEjecucionprocesos = new HashSet<CnfEjecucionproceso>();
+            CnfRangomontodetalles = new HashSet<CnfRangomontodetalle>();
         }
 
         /// <summary>
@@ -84,5 +93,13 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ICollection<ParMonedum> ParMoneda { get; set; }
         public virtual ICollection<ParTipocambio> ParTipocambios { get; set; }
         public virtual ICollection<ParSucursal> ParSucursals { get; set; }
+        public virtual ICollection<CnfCalificacionriesgoequivalencium> CnfCalificacionriesgoequivalencia { get; set; }
+        public virtual ICollection<CnfTablagenerica> CnfTablagenericas { get; set; }
+        public virtual ICollection<CnfTabla> CnfTablas { get; set; }
+        public virtual ICollection<CnfArchivo> CnfArchivos { get; set; }
+        public virtual ICollection<CnfEjecucionreporte> CnfEjecucionreportes { get; set; }
+        public virtual ICollection<CnfRangomontoencabezado> CnfRangomontoencabezados { get; set; }
+        public virtual ICollection<CnfEjecucionproceso> CnfEjecucionprocesos { get; set; }
+        public virtual ICollection<CnfRangomontodetalle> CnfRangomontodetalles { get; set; }
     }
 }
