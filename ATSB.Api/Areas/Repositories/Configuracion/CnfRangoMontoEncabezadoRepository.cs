@@ -33,7 +33,8 @@ namespace ATSB.Api.Areas.Repositories.Configuracion
         {
             return _context.CnfRangomontoencabezados
                 .AsNoTracking()
-                .Include(e => e.CodigoEmpresaNavigation); //Empresa
+                .Include(e => e.CodigoEmpresaNavigation)
+                .Include(det => det.CnfRangomontodetalles); //Empresa
         }
 
         public async Task<CnfRangomontoencabezado> GetCnfRangoMontoEncabezadoAsync(int CodigoEmpresa, int CodigoTabla)
@@ -43,7 +44,7 @@ namespace ATSB.Api.Areas.Repositories.Configuracion
                 .Include(e => e.CodigoEmpresaNavigation) //Empresa
                 .FirstOrDefaultAsync();
         }
-        
+
         public async Task<Response<object>> AddCnfRangoMontoEncabezadoAsync(CnfRangoMontoEncabezadoRequest cnfRangoMontoEncabezado)
         {
             try
