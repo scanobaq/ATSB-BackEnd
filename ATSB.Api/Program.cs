@@ -9,6 +9,11 @@ using ATSB.Helpers;
 using ATSB.Api.Areas.Repositories.Parametros;
 using ATSB.Api.Helpers;
 using ATSB.Api.Areas.Repositories.Configuracion;
+using ATSB.Api.Areas.Repositories.Contable;
+using ATSB.Api.Areas.Repositories.Credito;
+using ATSB.Api.Areas.Repositories.Liquidez;
+using ATSB.Api.Areas.Repositories.Pasivo;
+using ATSB.Api.Areas.Repositories.Seguridad;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -76,6 +81,23 @@ builder.Services.AddScoped<ICnfEjecucionReportesRepository, CnfEjecucionReportes
 builder.Services.AddScoped<ICnfRangoMontoEncabezadoRepository, CnfRangoMontoEncabezadoRepository>();
 builder.Services.AddScoped<ICnfEjecucionProcesosRepository, CnfEjecucionProcesosRepository>();
 builder.Services.AddScoped<ICnfRangoMontoDetalleRepository, CnfRangoMontoDetalleRepository>();
+builder.Services.AddScoped<IConTipoCuentaRepository, ConTipoCuentaRepository>();
+builder.Services.AddScoped<IConCatalogoEquivalenciaRepository, ConCatalogoEquivalenciaRepository>();
+builder.Services.AddScoped<IConCuentaLiquidezRepository, ConCuentaLiquidezRepository>();
+builder.Services.AddScoped<IConBalanceHistoricoRepository, ConBalanceHistoricoRepository>();
+builder.Services.AddScoped<IParCalificacionRiesgoPaisRepository, ParCalificacionRiesgoPaisRepository>();
+builder.Services.AddScoped<ICreMaestroRepository, CreMaestroRepository>();
+builder.Services.AddScoped<ILiqRubroProcesoRepository, LiqRubroProcesoRepository>();
+builder.Services.AddScoped<ILiqIndiceRepository, LiqIndiceRepository>();
+builder.Services.AddScoped<ILiqInstrumentoRubroRepository, LiqInstrumentoRubroRepository>();
+builder.Services.AddScoped<IPasMaestroRepository, PasMaestroRepository>();
+builder.Services.AddScoped<IPasCuentaLiquidezRepository, PasCuentaLiquidezRepository>();
+builder.Services.AddScoped<IPasDetalleHistoricoRepository, PasDetalleHistoricoRepository>();
+builder.Services.AddScoped<IPasGarantiaPIgnoradoRepository, PasGarantiaPIgnoradoRepository>();
+builder.Services.AddScoped<ISegEstadoRepository, SegEstadoRepository>();
+builder.Services.AddScoped<ISegEventoRepository, SegEventoRepository>();
+builder.Services.AddScoped<ISegHistoricoPasswordRepository, SegHistoricoPasswordRepository>();
+builder.Services.AddScoped<ISegConfiguracionRepository, SegConfiguracionRepository>();
 
 var app = builder.Build();
 

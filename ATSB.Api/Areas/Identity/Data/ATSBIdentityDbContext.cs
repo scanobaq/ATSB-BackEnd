@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ATSB.Api.Areas.Entities.Parametros;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ATSB.Api.Areas.Identity.Entities.Security;
 using ATSB.Api.Areas.Entities.Configuracion;
+using ATSB.Api.Areas.Entities.Contable;
+using ATSB.Api.Areas.Entities.Credito;
+using ATSB.Api.Areas.Entities.Liquidez;
+using ATSB.Api.Areas.Entities.Pasivo;
+using ATSB.Api.Areas.Entities.Seguridad;
+using ATSB.Api.Areas.Identity.Entities.Security;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 namespace ATSB.Api.Areas.Identity.Data
@@ -40,6 +45,23 @@ namespace ATSB.Api.Areas.Identity.Data
         public virtual DbSet<CnfRangomontoencabezado> CnfRangomontoencabezados { get; set; }
         public virtual DbSet<CnfEjecucionproceso> CnfEjecucionprocesos { get; set; }
         public virtual DbSet<CnfRangomontodetalle> CnfRangomontodetalles { get; set; }
+        public virtual DbSet<ConTipocuentum> ConTipocuenta { get; set; }
+        public virtual DbSet<ConCatalogoequivalencium> ConCatalogoequivalencia { get; set; }
+        public virtual DbSet<ConCuentaliquidez> ConCuentaliquidezs { get; set; }
+        public virtual DbSet<ConBalancehistorico> ConBalancehistoricos { get; set; }
+        public virtual DbSet<ParCalificacionriesgopai> ParCalificacionriesgopais { get; set; }
+        public virtual DbSet<CreMaestro> CreMaestros { get; set; }
+        public virtual DbSet<LiqRubroproceso> LiqRubroprocesos { get; set; }
+        public virtual DbSet<LiqIndie> LiqIndice { get; set; }
+        public virtual DbSet<LiqInstrumentorubro> LiqInstrumentorubros { get; set; }
+        public virtual DbSet<PasMaestro> PasMaestros { get; set; }
+        public virtual DbSet<PasCuentaliquidez> PasCuentaliquidezs { get; set; }
+        public virtual DbSet<PasDetallehistorico> PasDetallehistoricos { get; set; }
+        public virtual DbSet<PasGarantiapignorado> PasGarantiapignorados { get; set; }
+        public virtual DbSet<SegEstado> SegEstados { get; set; }
+        public virtual DbSet<SegEvento> SegEventos { get; set; }
+        public virtual DbSet<SegHistoricopassword> SegHistoricopasswords { get; set; }
+        public virtual DbSet<SegConfiguracion> SegConfiguracions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -886,6 +908,527 @@ namespace ATSB.Api.Areas.Identity.Data
                     .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTabla })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("CNF_RANGOMONTOENCABEZADO_CNF_RANGOMONTODETALLE");
+            });
+
+            modelBuilder.Entity<ConTipocuentum>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTipo });
+
+                entity.ToTable("CON_TIPOCUENTA");
+
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ConTipocuenta)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CON_TIPOCUENTA");
+            });
+
+            modelBuilder.Entity<ConCatalogoequivalencium>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdCuenta });
+
+                entity.ToTable("CON_CATALOGOEQUIVALENCIA");
+
+                entity.HasIndex(e => new { e.CodigoEmpresa, e.CuentaContableLocal }, "IDX_CON_CATALOGOEQUIVALENCIA_CUENTACONTABLELOCAL")
+                    .IsUnique();
+
+                entity.Property(e => e.CuentaContableLocal).HasMaxLength(30);
+
+                entity.Property(e => e.Destino)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCuenta)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ConCatalogoequivalencia)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CON_CATALOGOEQUIVALENCIA");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.ConCatalogoequivalencia)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTipo })
+                    .HasConstraintName("CON_TIPOCUENTA_CON_CATALOGOEQUIVALENCIA");
+            });
+
+            modelBuilder.Entity<ConCuentaliquidez>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CuentaLiquidez, e.CuentaContableLocal });
+
+                entity.ToTable("CON_CUENTALIQUIDEZ");
+
+                entity.Property(e => e.CodigoRelacionBanco)
+                    .HasMaxLength(2)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DestinoLocalExtranjero)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaAdquisicion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreEnte)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ConCuentaliquidezs)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CON_CUENTALIQUIDEZ");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.ConCuentaliquidezs)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoCalificacionRiesgo })
+                    .HasConstraintName("PAR_CALIFICACIONRIESGO_CON_CUENTALIQUIDEZ");
+            });
+
+            modelBuilder.Entity<ConBalancehistorico>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Fecha, e.CodigoCuentaContable })
+                    .HasName("PK__CON_BALA__45D0484C717513BE");
+
+                entity.ToTable("CON_BALANCEHISTORICO");
+
+                entity.Property(e => e.Fecha).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ConBalancehistoricos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CON_BALANCEHISTORICO");
+            });
+
+            modelBuilder.Entity<ParCalificacionriesgopai>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoPais });
+
+                entity.ToTable("PAR_CALIFICACIONRIESGOPAIS");
+
+                entity.Property(e => e.CalficacionAjustada).HasComputedColumnSql("(case when [dbo].[FN_CALCULAR_PERSPECTIVAFINAL]([PerspectivaFitch],[PerspectivaMoody],[PerspectivaSP])=(1) then [dbo].[FN_MODA]((((CONVERT([varchar](10),[NumeroCalificacionFitch])+';')+CONVERT([varchar](10),[NumeroCalificacionMoody]))+';')+CONVERT([varchar](10),[NumeroCalificacionSP]),';')*(1)+(1) else [dbo].[FN_MODA]((((CONVERT([varchar](10),[NumeroCalificacionFitch])+';')+CONVERT([varchar](10),[NumeroCalificacionMoody]))+';')+CONVERT([varchar](10),[NumeroCalificacionSP]),';')*(1) end)", false);
+
+                entity.Property(e => e.CodigoCalificacionFitch)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoCalificacionMoody)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoCalificacionSp)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CodigoCalificacionSP");
+
+                entity.Property(e => e.FechaUltimaActualizacion).HasColumnType("date");
+
+                entity.Property(e => e.FechaUltimaActualizacionFitch)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaUltimaActualizacionMoody)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaUltimaActualizacionSp)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("FechaUltimaActualizacionSP");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NumeroCalificacionPais).HasComputedColumnSql("([dbo].[FN_MODA]((((CONVERT([varchar](10),[NumeroCalificacionFitch])+';')+CONVERT([varchar](10),[NumeroCalificacionMoody]))+';')+CONVERT([varchar](10),[NumeroCalificacionSP]),';'))", false);
+
+                entity.Property(e => e.NumeroCalificacionSp).HasColumnName("NumeroCalificacionSP");
+
+                entity.Property(e => e.Pd).HasColumnName("PD");
+
+                entity.Property(e => e.Pdajustada).HasColumnName("PDAjustada");
+
+                entity.Property(e => e.Pdfinal).HasColumnName("PDFinal");
+
+                entity.Property(e => e.Perspectiva).HasComputedColumnSql("([dbo].[FN_CALCULAR_PERSPECTIVAFINAL]([PerspectivaFitch],[PerspectivaMoody],[PerspectivaSP]))", false);
+
+                entity.Property(e => e.PerspectivaSp).HasColumnName("PerspectivaSP");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ParCalificacionriesgopais)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_PAR_CALIFICACIONRIESGOPAIS");
+            });
+
+            modelBuilder.Entity<CreMaestro>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroOperacion });
+
+                entity.ToTable("CRE_MAESTRO");
+
+                entity.Property(e => e.NumeroOperacion)
+                    .HasMaxLength(16)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoCliente)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaArchivo).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaInicio).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaRevisionTasa).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaVencimiento).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCliente)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.CreMaestros)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CRE_MAESTRO");
+            });
+
+            modelBuilder.Entity<LiqRubroproceso>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Rubro });
+
+                entity.ToTable("LIQ_RUBROPROCESO");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.LiqRubroprocesos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_LIQ_RUBROPROCESO");
+            });
+
+            modelBuilder.Entity<LiqIndie>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Tipo, e.Rubro });
+
+                entity.ToTable("LIQ_INDICE");
+
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.TipoDescipcion)
+                    .IsRequired()
+                    .HasMaxLength(28)
+                    .IsUnicode(false)
+                    .HasComputedColumnSql("(case when [Tipo]='A' then 'ACTIVOS LÍQUIDOS' else 'PASIVOS(DEPÓSITOS RECIBIDOS)' end)", false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.LiqIndice)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_LIQ_INDICE");
+            });
+
+            modelBuilder.Entity<LiqInstrumentorubro>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Instrumento, e.CodigoRegion, e.CodigoRubro })
+                    .HasName("PK_tblLiq_Rubros_Instrumento");
+
+                entity.ToTable("LIQ_INSTRUMENTORUBRO");
+
+                entity.Property(e => e.Instrumento)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoRegion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoEstado)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.LiqInstrumentorubros)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_LIQ_INSTRUMENTORUBRO");
+            });
+
+            modelBuilder.Entity<PasMaestro>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroCuenta });
+
+                entity.ToTable("PAS_MAESTRO");
+
+                entity.HasIndex(e => new { e.CodigoEmpresa, e.IndicadorRelacionBanco }, "IDX_PAS_MAESTRO_INDICADORRELACIONBANCO");
+
+                entity.Property(e => e.NumeroCuenta)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DestinoLocalExtranjero)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaArchivo).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaInicio).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaInicioReal).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.IndicadorRelacionBanco)
+                    .HasMaxLength(2)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.PasMaestros)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_PAS_MAESTRO");
+            });
+
+            modelBuilder.Entity<PasCuentaliquidez>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.TipoDeposito, e.TipoCliente, e.CodigoCuentaLiquidez, e.DestinoLocalExtranjero });
+
+                entity.ToTable("PAS_CUENTALIQUIDEZ");
+
+                entity.Property(e => e.DestinoLocalExtranjero)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.PasCuentaliquidezs)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_PAS_CUENTALIQUIDEZ");
+            });
+
+            modelBuilder.Entity<PasDetallehistorico>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroOperacion, e.Fecha });
+
+                entity.ToTable("PAS_DETALLEHISTORICO");
+
+                entity.Property(e => e.NumeroOperacion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Fecha)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoCliente)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Destino)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaInicio)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaRenovacion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaVencimiento)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCliente)
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.PasDetallehistoricos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_PAS_DETALLEHISTORICO");
+            });
+
+            modelBuilder.Entity<PasGarantiapignorado>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroCuenta, e.NumeroOperacionGarantia });
+
+                entity.ToTable("PAS_GARANTIAPIGNORADO");
+
+                entity.Property(e => e.NumeroCuenta)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NumeroOperacionGarantia)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Agrupa)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaVencimientoOperacionGarantia).HasColumnType("date");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NumeroClienteOperacionGarantia)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.PasGarantiapignorados)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_PAS_GARANTIAPIGNORADO");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.PasGarantiapignorados)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_PAS_GARANTIAPIGNORADO");
+            });
+
+            modelBuilder.Entity<SegEstado>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoEstado });
+
+                entity.ToTable("SEG_ESTADO");
+
+                entity.Property(e => e.CodigoEstado)
+                    .HasMaxLength(2)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.SegEstados)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_SEG_ESTADO");
+            });
+
+            modelBuilder.Entity<SegEvento>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdEvento });
+
+                entity.ToTable("SEG_EVENTO");
+
+                entity.Property(e => e.IdEvento).HasColumnName("idEvento");
+
+                entity.Property(e => e.Descripción)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.SegEventos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_SEG_EVENTO");
+            });
+
+            modelBuilder.Entity<SegHistoricopassword>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdUsuario, e.FechaHoraCambio });
+
+                entity.ToTable("SEG_HISTORICOPASSWORD");
+
+                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+
+                entity.Property(e => e.FechaHoraCambio).HasColumnType("datetime");
+
+                entity.Property(e => e.DescripcionPassword)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.SegHistoricopasswords)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_SEG_HISTORICOPASSWORD");
+            });
+
+            modelBuilder.Entity<SegConfiguracion>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.IdParametro });
+
+                entity.ToTable("SEG_CONFIGURACION");
+
+                entity.Property(e => e.IdParametro).HasColumnName("idParametro");
+
+                entity.Property(e => e.FechaHoraIngreso).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.SegConfiguracions)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_SEG_CONFIGURACION");
+
+                entity.HasOne(d => d.CodigoEstadoNavigation)
+                    .WithMany(p => p.SegConfiguracions)
+                    .HasForeignKey(d => d.CodigoEstado)
+                    .HasConstraintName("PAR_ESTADO_SEG_CONFIGURACION");
             });
 
             OnModelCreatingPartial(modelBuilder);
