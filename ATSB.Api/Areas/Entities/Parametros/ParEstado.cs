@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ATSB.Api.Areas.Entities.Configuracion;
+using ATSB.Api.Areas.Entities.Pasivo;
+using ATSB.Api.Areas.Entities.Seguridad;
 
 namespace ATSB.Api.Areas.Entities.Parametros
 {
@@ -19,6 +21,8 @@ namespace ATSB.Api.Areas.Entities.Parametros
             CnfEjecucionreportes = new HashSet<CnfEjecucionreporte>();
             CnfEjecucionprocesos = new HashSet<CnfEjecucionproceso>();
             CnfRangomontodetalles = new HashSet<CnfRangomontodetalle>();
+            PasGarantiapignorados = new HashSet<PasGarantiapignorado>();
+            SegConfiguracions = new HashSet<SegConfiguracion>();
         }
 
         /// <summary>
@@ -38,5 +42,7 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ICollection<CnfEjecucionreporte> CnfEjecucionreportes { get; set; }
         public virtual ICollection<CnfEjecucionproceso> CnfEjecucionprocesos { get; set; }
         public virtual ICollection<CnfRangomontodetalle> CnfRangomontodetalles { get; set; }
+        public virtual ICollection<PasGarantiapignorado> PasGarantiapignorados { get; set; }
+        public virtual ICollection<SegConfiguracion> SegConfiguracions { get; set; }
     }
 }

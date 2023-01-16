@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using ATSB.Api.Areas.Entities.Configuracion;
+using ATSB.Api.Areas.Entities.Contable;
+using ATSB.Api.Areas.Entities.Credito;
+using ATSB.Api.Areas.Entities.Liquidez;
+using ATSB.Api.Areas.Entities.Pasivo;
+using ATSB.Api.Areas.Entities.Seguridad;
 
 namespace ATSB.Api.Areas.Entities.Parametros
 {
@@ -26,6 +31,23 @@ namespace ATSB.Api.Areas.Entities.Parametros
             CnfRangomontoencabezados = new HashSet<CnfRangomontoencabezado>();
             CnfEjecucionprocesos = new HashSet<CnfEjecucionproceso>();
             CnfRangomontodetalles = new HashSet<CnfRangomontodetalle>();
+            ConTipocuenta = new HashSet<ConTipocuentum>();
+            ConCatalogoequivalencia = new HashSet<ConCatalogoequivalencium>();
+            ConCuentaliquidezs = new HashSet<ConCuentaliquidez>();
+            ConBalancehistoricos = new HashSet<ConBalancehistorico>();
+            ParCalificacionriesgopais = new HashSet<ParCalificacionriesgopai>();
+            CreMaestros = new HashSet<CreMaestro>();
+            LiqRubroprocesos = new HashSet<LiqRubroproceso>();
+            LiqIndice = new HashSet<LiqIndie>();
+            LiqInstrumentorubros = new HashSet<LiqInstrumentorubro>();
+            PasMaestros = new HashSet<PasMaestro>();
+            PasCuentaliquidezs = new HashSet<PasCuentaliquidez>();
+            PasDetallehistoricos = new HashSet<PasDetallehistorico>();
+            PasGarantiapignorados = new HashSet<PasGarantiapignorado>();
+            SegEstados = new HashSet<SegEstado>();
+            SegEventos = new HashSet<SegEvento>();
+            SegHistoricopasswords = new HashSet<SegHistoricopassword>();
+            SegConfiguracions = new HashSet<SegConfiguracion>();
         }
 
         /// <summary>
@@ -101,5 +123,23 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ICollection<CnfRangomontoencabezado> CnfRangomontoencabezados { get; set; }
         public virtual ICollection<CnfEjecucionproceso> CnfEjecucionprocesos { get; set; }
         public virtual ICollection<CnfRangomontodetalle> CnfRangomontodetalles { get; set; }
+        public virtual ICollection<ConTipocuentum> ConTipocuenta { get; set; }
+        public virtual ICollection<ConCatalogoequivalencium> ConCatalogoequivalencia { get; set; }
+        public virtual ICollection<ConCuentaliquidez> ConCuentaliquidezs { get; set; }
+        public virtual ICollection<ConBalancehistorico> ConBalancehistoricos { get; set; }
+        public virtual ICollection<ParCalificacionriesgopai> ParCalificacionriesgopais { get; set; }
+        public virtual ICollection<CreMaestro> CreMaestros { get; set; }
+        public virtual ICollection<LiqRubroproceso> LiqRubroprocesos { get; set; }
+        public virtual ICollection<LiqIndie> LiqIndice { get; set; }
+        public virtual ICollection<LiqInstrumentorubro> LiqInstrumentorubros { get; set; }
+        public virtual ICollection<PasMaestro> PasMaestros { get; set; }
+        public virtual ICollection<PasCuentaliquidez> PasCuentaliquidezs { get; set; }
+        public virtual ICollection<PasDetallehistorico> PasDetallehistoricos { get; set; }
+        public virtual ICollection<PasGarantiapignorado> PasGarantiapignorados { get; set; }
+
+        public virtual ICollection<SegEstado> SegEstados { get; set; }
+        public virtual ICollection<SegEvento> SegEventos { get; set; }
+        public virtual ICollection<SegHistoricopassword> SegHistoricopasswords { get; set; }
+        public virtual ICollection<SegConfiguracion> SegConfiguracions { get; set; }
     }
 }
