@@ -63,12 +63,12 @@ builder.Services.AddScoped<IArchivosInventarioHelper, ArchivosInventarioHelper>(
 
 builder.Services.AddScoped<IParEstadoRepository, ParEstadoRepository>();
 builder.Services.AddScoped<IParPaisRepository, ParPaisRepository>();
-builder.Services.AddScoped<IParTipoIdentificacionRepository , ParTipoIdentificacionRepository>();
+builder.Services.AddScoped<IParTipoIdentificacionRepository, ParTipoIdentificacionRepository>();
 builder.Services.AddScoped<IParEmpresaRepository, ParEmpresaRepository>();
 builder.Services.AddScoped<IParConsecutivoRepository, ParConsecutivoRepository>();
 builder.Services.AddScoped<IParProcesoRepository, ParProcesoRepository>();
 builder.Services.AddScoped<IParTipoOrigenDatosRepository, ParTipoOrigenDatosRepository>();
-builder.Services.AddScoped<IParCalificacionRiesgoRepository,ParCalificacionRiesgoRepository>();
+builder.Services.AddScoped<IParCalificacionRiesgoRepository, ParCalificacionRiesgoRepository>();
 builder.Services.AddScoped<IParMonedaRepository, ParMonedaRepository>();
 builder.Services.AddScoped<IParTipoCambioRepository, ParTipoCambioRepository>();
 builder.Services.AddScoped<IParSucursalRepository, ParSucursalRepository>();
@@ -78,7 +78,7 @@ builder.Services.AddScoped<ICnfTablaGenericaCamposRepository, CnfTablaGenericaCa
 builder.Services.AddScoped<ICnfTablaRepository, CnfTablaRepository>();
 builder.Services.AddScoped<ICnfTablaValorRepository, CnfTablaValorRepository>();
 builder.Services.AddScoped<ICnfArchivoRepository, CnfArchivoRepository>();
-builder.Services.AddScoped<ICnfArchivoCampoRepository,CnfArchivoCampoRepository>();
+builder.Services.AddScoped<ICnfArchivoCampoRepository, CnfArchivoCampoRepository>();
 builder.Services.AddScoped<ICnfTablaGenericaValoresRepository, CnfTablaGenericaValoresRepository>();
 builder.Services.AddScoped<ICnfEjecucionReportesRepository, CnfEjecucionReportesRepository>();
 builder.Services.AddScoped<ICnfRangoMontoEncabezadoRepository, CnfRangoMontoEncabezadoRepository>();

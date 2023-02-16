@@ -115,7 +115,7 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ParTipoidentificacion Codigo { get; set; }
         public virtual ParEstado CodigoEstadoNavigation { get; set; }
         public virtual ParPai CodigoPaisNavigation { get; set; }
-        
+
         public virtual ICollection<ParConsecutivo> ParConsecutivos { get; set; }
         public virtual ICollection<ParProceso> ParProcesos { get; set; }
         public virtual ICollection<ParTipoorigendato> ParTipoorigendatos { get; set; }
