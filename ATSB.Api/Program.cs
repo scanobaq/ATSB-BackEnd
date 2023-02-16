@@ -14,6 +14,7 @@ using ATSB.Api.Areas.Repositories.Credito;
 using ATSB.Api.Areas.Repositories.Liquidez;
 using ATSB.Api.Areas.Repositories.Pasivo;
 using ATSB.Api.Areas.Repositories.Seguridad;
+using ATSB.Api.Areas.Repositories.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -57,6 +58,7 @@ builder.Services.AddIdentity<UserAtsb, IdentityRole>(options =>
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IConsecutivoHelper, ConsecutivoHelper>();
+builder.Services.AddScoped<IArchivosInventarioHelper, ArchivosInventarioHelper>();
 
 builder.Services.AddScoped<IParEstadoRepository, ParEstadoRepository>();
 builder.Services.AddScoped<IParPaisRepository, ParPaisRepository>();
@@ -98,6 +100,9 @@ builder.Services.AddScoped<ISegEstadoRepository, SegEstadoRepository>();
 builder.Services.AddScoped<ISegEventoRepository, SegEventoRepository>();
 builder.Services.AddScoped<ISegHistoricoPasswordRepository, SegHistoricoPasswordRepository>();
 builder.Services.AddScoped<ISegConfiguracionRepository, SegConfiguracionRepository>();
+builder.Services.AddScoped<ISegAccesoRepository, SegAccesoRepository>();
+builder.Services.AddScoped<ILogEjecucionProcesoRepository, LogEjecucionProcesoRepository>();
+builder.Services.AddScoped<IConBalanceComparativoRepository, ConBalanceComparativoRepository>();
 
 var app = builder.Build();
 

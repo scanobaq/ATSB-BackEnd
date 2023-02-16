@@ -9,6 +9,7 @@ namespace ATSB.Api.Areas.Entities.Contable
         public ConTipocuentum()
         {
             ConCatalogoequivalencia = new HashSet<ConCatalogoequivalencium>();
+            ConBalancecomparativos = new HashSet<ConBalancecomparativo>();
         }
 
         public int CodigoEmpresa { get; set; }
@@ -18,5 +19,6 @@ namespace ATSB.Api.Areas.Entities.Contable
 
         public virtual ParEmpresa CodigoEmpresaNavigation { get; set; }
         public virtual ICollection<ConCatalogoequivalencium> ConCatalogoequivalencia { get; set; }
+        public virtual ICollection<ConBalancecomparativo> ConBalancecomparativos { get; set; }
     }
 }
