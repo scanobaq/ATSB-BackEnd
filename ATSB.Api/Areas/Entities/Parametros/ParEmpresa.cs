@@ -48,6 +48,8 @@ namespace ATSB.Api.Areas.Entities.Parametros
             SegEventos = new HashSet<SegEvento>();
             SegHistoricopasswords = new HashSet<SegHistoricopassword>();
             SegConfiguracions = new HashSet<SegConfiguracion>();
+            SegAccesos = new HashSet<SegAcceso>();
+            ConBalancecomparativos = new HashSet<ConBalancecomparativo>();
         }
 
         /// <summary>
@@ -141,5 +143,7 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ICollection<SegEvento> SegEventos { get; set; }
         public virtual ICollection<SegHistoricopassword> SegHistoricopasswords { get; set; }
         public virtual ICollection<SegConfiguracion> SegConfiguracions { get; set; }
+        public virtual ICollection<SegAcceso> SegAccesos { get; set; }
+        public virtual ICollection<ConBalancecomparativo> ConBalancecomparativos { get; set; }
     }
 }

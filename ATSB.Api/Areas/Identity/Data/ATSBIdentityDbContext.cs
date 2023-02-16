@@ -9,6 +9,7 @@ using ATSB.Api.Areas.Entities.Credito;
 using ATSB.Api.Areas.Entities.Liquidez;
 using ATSB.Api.Areas.Entities.Pasivo;
 using ATSB.Api.Areas.Entities.Seguridad;
+using ATSB.Api.Areas.Entities.Logs;
 using ATSB.Api.Areas.Identity.Entities.Security;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -62,6 +63,9 @@ namespace ATSB.Api.Areas.Identity.Data
         public virtual DbSet<SegEvento> SegEventos { get; set; }
         public virtual DbSet<SegHistoricopassword> SegHistoricopasswords { get; set; }
         public virtual DbSet<SegConfiguracion> SegConfiguracions { get; set; }
+        public virtual DbSet<SegAcceso> SegAccesos { get; set; }
+        public virtual DbSet<LogEjecucionproceso> LogEjecucionprocesos { get; set; }
+        public virtual DbSet<ConBalancecomparativo> ConBalancecomparativos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1429,6 +1433,99 @@ namespace ATSB.Api.Areas.Identity.Data
                     .WithMany(p => p.SegConfiguracions)
                     .HasForeignKey(d => d.CodigoEstado)
                     .HasConstraintName("PAR_ESTADO_SEG_CONFIGURACION");
+            });
+
+            modelBuilder.Entity<SegAcceso>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTipoAcceso });
+
+                entity.ToTable("SEG_ACCESO");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(75)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(450)
+                    .HasColumnName("id");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.SegAccesos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_SEG_ACCESO");
+            });
+
+            modelBuilder.Entity<LogEjecucionproceso>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoProceso, e.SecuenciaProceso, e.FechaInforme });
+
+                entity.ToTable("LOG_EJECUCIONPROCESOS");
+
+                entity.Property(e => e.FechaInforme).HasColumnType("date");
+
+                entity.Property(e => e.CantidadRegistros)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoErrorDb).HasColumnName("CodigoErrorDB");
+
+                entity.Property(e => e.FechaEjecucion).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.MensajeOriginal)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MensajeTarea)
+                    .HasMaxLength(8000)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CnfEjecucionproceso)
+                    .WithMany(p => p.LogEjecucionprocesos)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoProceso, d.SecuenciaProceso })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CNF_EJECUCIONPROCESOS_LOG_EJECUCIONPROCESOS");
+            });
+
+            modelBuilder.Entity<ConBalancecomparativo>(entity =>
+            {
+                entity.HasKey(e => e.Llave)
+                    .HasName("PK__CON_BALA__8E70B293D80874AF");
+
+                entity.ToTable("CON_BALANCECOMPARATIVO");
+
+                entity.Property(e => e.Llave).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.FechaFinal).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaInicio).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.ConBalancecomparativos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_CON_BALANCECOMPARATIVO");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.ConBalancecomparativos)
+                    .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTipo })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CON_TIPOCUENTA_CON_BALANCECOMPARATIVO");
             });
 
             OnModelCreatingPartial(modelBuilder);
