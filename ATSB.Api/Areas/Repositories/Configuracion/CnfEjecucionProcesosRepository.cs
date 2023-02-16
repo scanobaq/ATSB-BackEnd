@@ -17,16 +17,19 @@ namespace ATSB.Api.Areas.Repositories.Configuracion
     {
         private readonly ATSBIdentityDbContext _context;
         private readonly IConsecutivoHelper _ConsecutivoHelper;
+        private readonly IArchivosInventarioHelper _ArchivosInventarioHelper;
 
         public CnfEjecucionProcesosRepository
         (
             ATSBIdentityDbContext context,
-            IConsecutivoHelper ConsecutivoHelper
+            IConsecutivoHelper ConsecutivoHelper,
+            IArchivosInventarioHelper ArchivosInventarioHelper
         ) : base()
 
         {
             _context = context;
             _ConsecutivoHelper = ConsecutivoHelper;
+            _ArchivosInventarioHelper = ArchivosInventarioHelper;
         }
 
         public IQueryable GetCnfEjecucionProcesos()
@@ -54,6 +57,7 @@ namespace ATSB.Api.Areas.Repositories.Configuracion
         {
             try
             {
+
                 var cnfejecucionproceso = new CnfEjecucionproceso
                 {
                     CodigoEmpresa = cnfEjecucionProceso.CodigoEmpresa,

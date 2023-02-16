@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using ATSB.Api.Areas.Entities.Parametros;
+using ATSB.Api.Areas.Entities.Logs;
 
 namespace ATSB.Api.Areas.Entities.Configuracion
 {
     public partial class CnfEjecucionproceso
     {
+        public CnfEjecucionproceso()
+        {
+            LogEjecucionprocesos = new HashSet<LogEjecucionproceso>();
+        }
+
         public int CodigoEmpresa { get; set; }
         public int CodigoProceso { get; set; }
         public int SecuenciaProceso { get; set; }
@@ -26,5 +32,6 @@ namespace ATSB.Api.Areas.Entities.Configuracion
         public virtual ParEmpresa CodigoEmpresaNavigation { get; set; }
         public virtual ParEstado CodigoEstadoNavigation { get; set; }
         public virtual ParProceso CodigoNavigation { get; set; }
+        public virtual ICollection<LogEjecucionproceso> LogEjecucionprocesos { get; set; }
     }
 }
