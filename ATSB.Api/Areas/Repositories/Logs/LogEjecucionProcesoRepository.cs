@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using ATSB.Api.Areas.Identity.Data;
 using ATSB.Models;
 using ATSB.Api.Areas.Entities.Logs;
-
 using ATSB.Api.Helpers;
 using ATSB.Api.Areas.Entities.Parametros;
 

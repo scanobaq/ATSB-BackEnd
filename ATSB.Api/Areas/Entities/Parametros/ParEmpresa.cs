@@ -6,6 +6,7 @@ using ATSB.Api.Areas.Entities.Credito;
 using ATSB.Api.Areas.Entities.Liquidez;
 using ATSB.Api.Areas.Entities.Pasivo;
 using ATSB.Api.Areas.Entities.Seguridad;
+using ATSB.Api.Areas.Entities.Temporales;
 
 namespace ATSB.Api.Areas.Entities.Parametros
 {
@@ -50,6 +51,11 @@ namespace ATSB.Api.Areas.Entities.Parametros
             SegConfiguracions = new HashSet<SegConfiguracion>();
             SegAccesos = new HashSet<SegAcceso>();
             ConBalancecomparativos = new HashSet<ConBalancecomparativo>();
+            TmpCargaTxtBalancecontables = new HashSet<TmpCargaTxtBalancecontable>();
+            TmpCargaTxtCreditos = new HashSet<TmpCargaTxtCredito>();
+            TmpCargaTxtDepositoplazos = new HashSet<TmpCargaTxtDepositoplazo>();
+            TmpCargaTxtDepositoplazopignorados = new HashSet<TmpCargaTxtDepositoplazopignorado>();
+            TmpCargaTxtCreditocalces = new HashSet<TmpCargaTxtCreditocalce>();
         }
 
         /// <summary>
@@ -145,5 +151,10 @@ namespace ATSB.Api.Areas.Entities.Parametros
         public virtual ICollection<SegConfiguracion> SegConfiguracions { get; set; }
         public virtual ICollection<SegAcceso> SegAccesos { get; set; }
         public virtual ICollection<ConBalancecomparativo> ConBalancecomparativos { get; set; }
+        public virtual ICollection<TmpCargaTxtBalancecontable> TmpCargaTxtBalancecontables { get; set; }
+        public virtual ICollection<TmpCargaTxtCredito> TmpCargaTxtCreditos { get; set; }
+        public virtual ICollection<TmpCargaTxtDepositoplazo> TmpCargaTxtDepositoplazos { get; set; }
+        public virtual ICollection<TmpCargaTxtDepositoplazopignorado> TmpCargaTxtDepositoplazopignorados { get; set; }
+        public virtual ICollection<TmpCargaTxtCreditocalce> TmpCargaTxtCreditocalces { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using ATSB.Api.Areas.Entities.Liquidez;
 using ATSB.Api.Areas.Entities.Pasivo;
 using ATSB.Api.Areas.Entities.Seguridad;
 using ATSB.Api.Areas.Entities.Logs;
+using ATSB.Api.Areas.Entities.Temporales;
 using ATSB.Api.Areas.Identity.Entities.Security;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -66,6 +67,13 @@ namespace ATSB.Api.Areas.Identity.Data
         public virtual DbSet<SegAcceso> SegAccesos { get; set; }
         public virtual DbSet<LogEjecucionproceso> LogEjecucionprocesos { get; set; }
         public virtual DbSet<ConBalancecomparativo> ConBalancecomparativos { get; set; }
+        public virtual DbSet<TmpCargaTxtBalancecontable> TmpCargaTxtBalancecontables { get; set; }
+        public virtual DbSet<TmpCargaTxtCredito> TmpCargaTxtCreditos { get; set; }
+        public virtual DbSet<TmpCargaTxtDepositoplazo> TmpCargaTxtDepositoplazos { get; set; }
+        public virtual DbSet<TmpCargaTxtDepositoplazopignorado> TmpCargaTxtDepositoplazopignorados { get; set; }
+        public virtual DbSet<TmpCargaExcelCreditoCalificacionesDef> TmpCargaExcelCreditoCalificacionesDefs { get; set; }
+        public virtual DbSet<TmpCargaExcelMaestroTcDef> TmpCargaExcelMaestroTcDefs { get; set; }
+        public virtual DbSet<TmpCargaTxtCreditocalce> TmpCargaTxtCreditocalces { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1526,6 +1534,253 @@ namespace ATSB.Api.Areas.Identity.Data
                     .HasForeignKey(d => new { d.CodigoEmpresa, d.CodigoTipo })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("CON_TIPOCUENTA_CON_BALANCECOMPARATIVO");
+            });
+
+            modelBuilder.Entity<TmpCargaTxtBalancecontable>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Fecha, e.Cuenta });
+
+                entity.ToTable("TMP_CARGA_TXT_BALANCECONTABLE");
+
+                entity.Property(e => e.Fecha).HasMaxLength(8);
+
+                entity.Property(e => e.Cuenta).HasMaxLength(30);
+
+                entity.Property(e => e.Detalle)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.TmpCargaTxtBalancecontables)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_TMP_CARGA_TXT_BALANCECONTABLE");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.TmpCargaTxtBalancecontables)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_BALANCECONTABLE");
+            });
+
+            modelBuilder.Entity<TmpCargaTxtCredito>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroOperacion });
+
+                entity.ToTable("TMP_CARGA_TXT_CREDITO");
+
+                entity.Property(e => e.NumeroOperacion).HasMaxLength(16);
+
+                entity.Property(e => e.ClasePrestamo)
+                    .IsRequired()
+                    .HasMaxLength(2);
+
+                entity.Property(e => e.CodigoCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FechaArchivo).HasColumnType("datetime");
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TipoCredito)
+                    .IsRequired()
+                    .HasMaxLength(3);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.TmpCargaTxtCreditos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_TMP_CARGA_TXT_CREDITO");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.TmpCargaTxtCreditos)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_CREDITO");
+            });
+
+            modelBuilder.Entity<TmpCargaTxtDepositoplazo>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.Cuenta });
+
+                entity.ToTable("TMP_CARGA_TXT_DEPOSITOPLAZO");
+
+                entity.Property(e => e.Cuenta).HasMaxLength(50);
+
+                entity.Property(e => e.CodigoCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CodigoEstado)
+                    .IsRequired()
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.CodigoSectorEconomico)
+                    .IsRequired()
+                    .HasMaxLength(2);
+
+                entity.Property(e => e.FechaArchivo).HasColumnType("datetime");
+
+                entity.Property(e => e.FormaPago)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.TmpCargaTxtDepositoplazos)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_TMP_CARGA_TXT_DEPOSITOPLAZO");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.TmpCargaTxtDepositoplazos)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_DEPOSITOPLAZO");
+            });
+
+            modelBuilder.Entity<TmpCargaTxtDepositoplazopignorado>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.NumeroCuenta });
+
+                entity.ToTable("TMP_CARGA_TXT_DEPOSITOPLAZOPIGNORADO");
+
+                entity.Property(e => e.NumeroCuenta).HasMaxLength(50);
+
+                entity.Property(e => e.CodigoCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CodigoTipoGarantia)
+                    .IsRequired()
+                    .HasMaxLength(6);
+
+                entity.Property(e => e.IdUsuario)
+                    .IsRequired()
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.Property(e => e.NombreCliente)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TipoDeposito)
+                    .IsRequired()
+                    .HasMaxLength(2);
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.TmpCargaTxtDepositoplazopignorados)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_TMP_CARGA_TXT_DEPOSITOPLAZOPIGNORADO");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.TmpCargaTxtDepositoplazopignorados)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_DEPOSITOPLAZOPIGNORADO");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelCreditoCalificacionesDef>(entity =>
+            {
+                entity.HasKey(e => e.NumOper)
+                    .HasName("TMP_EXCEL_LOAN_CALIF$TMP_EXCEL_LOAN_CALIF_PK_INDEX");
+
+                entity.ToTable("TMP_CARGA_EXCEL_CREDITO_CALIFICACIONES_DEF");
+
+                entity.Property(e => e.NumOper)
+                    .HasMaxLength(16)
+                    .HasColumnName("num_oper");
+
+                entity.Property(e => e.ClasPres)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .HasColumnName("Clas_Pres");
+
+                entity.Property(e => e.FechaCarga)
+                    .HasPrecision(0)
+                    .HasColumnName("Fecha_Carga");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelMaestroTcDef>(entity =>
+            {
+                entity.HasKey(e => e.NumeroTarjeta)
+                    .HasName("TMP_EXCEL_MAESTRO_TC$PK_NumeroTarjeta");
+
+                entity.ToTable("TMP_CARGA_EXCEL_MAESTRO_TC_DEF");
+
+                entity.Property(e => e.NumeroTarjeta).HasMaxLength(30);
+
+                entity.Property(e => e.Centalta).HasMaxLength(10);
+
+                entity.Property(e => e.CodigoCliente).HasMaxLength(30);
+
+                entity.Property(e => e.Contrato).HasMaxLength(30);
+
+                entity.Property(e => e.EstadoTarjeta).HasMaxLength(100);
+
+                entity.Property(e => e.FechaEmision).HasPrecision(0);
+
+                entity.Property(e => e.FechaVencimiento).HasPrecision(0);
+
+                entity.Property(e => e.Identificacion).HasMaxLength(30);
+
+                entity.Property(e => e.NombreCliente)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.SaldoAFavor).HasColumnName("Saldo_a_Favor");
+
+                entity.Property(e => e.TcRelacionada).HasMaxLength(30);
+
+                entity.Property(e => e.TipoIdentificacion).HasMaxLength(5);
+
+                entity.Property(e => e.TipoProducto).HasMaxLength(100);
+
+                entity.Property(e => e.TipoTarjeta).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<TmpCargaTxtCreditocalce>(entity =>
+            {
+                entity.HasKey(e => new { e.CodigoEmpresa, e.CodigoTipo, e.NumeroCredito });
+
+                entity.ToTable("TMP_CARGA_TXT_CREDITOCALCE");
+
+                entity.Property(e => e.CodigoTipo).HasMaxLength(1);
+
+                entity.Property(e => e.NumeroCredito).HasMaxLength(15);
+
+                entity.Property(e => e.IdUsuario)
+                    .HasMaxLength(450)
+                    .HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.CodigoEmpresaNavigation)
+                    .WithMany(p => p.TmpCargaTxtCreditocalces)
+                    .HasForeignKey(d => d.CodigoEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PAR_EMPRESA_TMP_CARGA_TXT_CREDITOCALCE");
+
+                entity.HasOne(d => d.Codigo)
+                    .WithMany(p => p.TmpCargaTxtCreditocalces)
+                    .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
+                    .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_CREDITOCALCE");
             });
 
             OnModelCreatingPartial(modelBuilder);
