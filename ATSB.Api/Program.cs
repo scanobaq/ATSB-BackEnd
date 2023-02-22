@@ -15,6 +15,7 @@ using ATSB.Api.Areas.Repositories.Liquidez;
 using ATSB.Api.Areas.Repositories.Pasivo;
 using ATSB.Api.Areas.Repositories.Seguridad;
 using ATSB.Api.Areas.Repositories.Logs;
+using ATSB.Api.Areas.Repositories.Temporales;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -103,6 +104,13 @@ builder.Services.AddScoped<ISegConfiguracionRepository, SegConfiguracionReposito
 builder.Services.AddScoped<ISegAccesoRepository, SegAccesoRepository>();
 builder.Services.AddScoped<ILogEjecucionProcesoRepository, LogEjecucionProcesoRepository>();
 builder.Services.AddScoped<IConBalanceComparativoRepository, ConBalanceComparativoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtBalanceContableRepository, TmpCargaTxtBalanceContableRepository>();
+builder.Services.AddScoped<ITmpCargaTxtCreditoRepository, TmpCargaTxtCreditoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtDepositoPlazoRepository, TmpCargaTxtDepositoPlazoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtDepositoPlazoPIgnoradoRepository, TmpCargaTxtDepositoPlazoPIgnoradoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtCreditoCalceRepository, TmpCargaTxtCreditoCalceRepository>();
+builder.Services.AddScoped<ITmpCargaExcelCreditoCalificacionesDefRepository, TmpCargaExcelCreditoCalificacionesDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelMaestroTcDefRepository, TmpCargaExcelMaestroTcDefRepository>();
 
 var app = builder.Build();
 
