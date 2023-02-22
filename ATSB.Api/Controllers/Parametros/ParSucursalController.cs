@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ATSB.Api.Areas.Entities.Parametros;
 using ATSB.Api.Areas.Identity.Data;
-using System.Text.Json;
 using Newtonsoft.Json;
 using ATSB.Api.Areas.Repositories.Parametros;
 using ATSB.Models;
@@ -30,7 +22,7 @@ namespace ATSB.Api.Controllers.Parametros
 
         // GET: api/ParSucursal
         [HttpGet("GetParSucursales")]
-        public async Task<string> GetParSucursals()
+        public async Task<string> GetParSucursales()
         {
             var dataParSucursales = _ParSucursalRepository.GetParSucursales();
 

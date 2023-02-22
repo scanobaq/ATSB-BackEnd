@@ -7,5 +7,7 @@ namespace ATSB.Api.Areas.Identity.Entities.Security
         public string? Nombre { get; set; }
         public string? Apellido1 { get; set; }
         public string? Apellido2 { get; set; }
+        public string? CodigoEmpresa { get; set; }
+
     }
 }

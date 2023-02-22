@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/f8468eed-b268-463c-9cd7-60de52be3672/AppServices/subscriptions/f8468eed-b268-463c-9cd7-60de52be3672/resourceGroups/ATSB/providers/Microsoft.Web/sites/atsb-api-test",
+  "appService.deploySubpath": "publish"
+}

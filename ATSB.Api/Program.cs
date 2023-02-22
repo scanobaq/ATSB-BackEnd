@@ -8,6 +8,14 @@ using ATSB.Api.Areas.Identity.Data;
 using ATSB.Helpers;
 using ATSB.Api.Areas.Repositories.Parametros;
 using ATSB.Api.Helpers;
+using ATSB.Api.Areas.Repositories.Configuracion;
+using ATSB.Api.Areas.Repositories.Contable;
+using ATSB.Api.Areas.Repositories.Credito;
+using ATSB.Api.Areas.Repositories.Liquidez;
+using ATSB.Api.Areas.Repositories.Pasivo;
+using ATSB.Api.Areas.Repositories.Seguridad;
+using ATSB.Api.Areas.Repositories.Logs;
+using ATSB.Api.Areas.Repositories.Temporales;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ATSBIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ATSBIdentityDbContextConnection' not found.");
@@ -51,6 +59,7 @@ builder.Services.AddIdentity<UserAtsb, IdentityRole>(options =>
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IConsecutivoHelper, ConsecutivoHelper>();
+builder.Services.AddScoped<IArchivosInventarioHelper, ArchivosInventarioHelper>();
 
 builder.Services.AddScoped<IParEstadoRepository, ParEstadoRepository>();
 builder.Services.AddScoped<IParPaisRepository, ParPaisRepository>();
@@ -63,7 +72,45 @@ builder.Services.AddScoped<IParCalificacionRiesgoRepository,ParCalificacionRiesg
 builder.Services.AddScoped<IParMonedaRepository, ParMonedaRepository>();
 builder.Services.AddScoped<IParTipoCambioRepository, ParTipoCambioRepository>();
 builder.Services.AddScoped<IParSucursalRepository, ParSucursalRepository>();
-
+builder.Services.AddScoped<ICnfCalificacionRiesgoEquivalenciaRepository, CnfCalificacionRiesgoEquivalenciaRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaRepository, CnfTablaGenericaRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaCamposRepository, CnfTablaGenericaCamposRepository>();
+builder.Services.AddScoped<ICnfTablaRepository, CnfTablaRepository>();
+builder.Services.AddScoped<ICnfTablaValorRepository, CnfTablaValorRepository>();
+builder.Services.AddScoped<ICnfArchivoRepository, CnfArchivoRepository>();
+builder.Services.AddScoped<ICnfArchivoCampoRepository,CnfArchivoCampoRepository>();
+builder.Services.AddScoped<ICnfTablaGenericaValoresRepository, CnfTablaGenericaValoresRepository>();
+builder.Services.AddScoped<ICnfEjecucionReportesRepository, CnfEjecucionReportesRepository>();
+builder.Services.AddScoped<ICnfRangoMontoEncabezadoRepository, CnfRangoMontoEncabezadoRepository>();
+builder.Services.AddScoped<ICnfEjecucionProcesosRepository, CnfEjecucionProcesosRepository>();
+builder.Services.AddScoped<ICnfRangoMontoDetalleRepository, CnfRangoMontoDetalleRepository>();
+builder.Services.AddScoped<IConTipoCuentaRepository, ConTipoCuentaRepository>();
+builder.Services.AddScoped<IConCatalogoEquivalenciaRepository, ConCatalogoEquivalenciaRepository>();
+builder.Services.AddScoped<IConCuentaLiquidezRepository, ConCuentaLiquidezRepository>();
+builder.Services.AddScoped<IConBalanceHistoricoRepository, ConBalanceHistoricoRepository>();
+builder.Services.AddScoped<IParCalificacionRiesgoPaisRepository, ParCalificacionRiesgoPaisRepository>();
+builder.Services.AddScoped<ICreMaestroRepository, CreMaestroRepository>();
+builder.Services.AddScoped<ILiqRubroProcesoRepository, LiqRubroProcesoRepository>();
+builder.Services.AddScoped<ILiqIndiceRepository, LiqIndiceRepository>();
+builder.Services.AddScoped<ILiqInstrumentoRubroRepository, LiqInstrumentoRubroRepository>();
+builder.Services.AddScoped<IPasMaestroRepository, PasMaestroRepository>();
+builder.Services.AddScoped<IPasCuentaLiquidezRepository, PasCuentaLiquidezRepository>();
+builder.Services.AddScoped<IPasDetalleHistoricoRepository, PasDetalleHistoricoRepository>();
+builder.Services.AddScoped<IPasGarantiaPIgnoradoRepository, PasGarantiaPIgnoradoRepository>();
+builder.Services.AddScoped<ISegEstadoRepository, SegEstadoRepository>();
+builder.Services.AddScoped<ISegEventoRepository, SegEventoRepository>();
+builder.Services.AddScoped<ISegHistoricoPasswordRepository, SegHistoricoPasswordRepository>();
+builder.Services.AddScoped<ISegConfiguracionRepository, SegConfiguracionRepository>();
+builder.Services.AddScoped<ISegAccesoRepository, SegAccesoRepository>();
+builder.Services.AddScoped<ILogEjecucionProcesoRepository, LogEjecucionProcesoRepository>();
+builder.Services.AddScoped<IConBalanceComparativoRepository, ConBalanceComparativoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtBalanceContableRepository, TmpCargaTxtBalanceContableRepository>();
+builder.Services.AddScoped<ITmpCargaTxtCreditoRepository, TmpCargaTxtCreditoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtDepositoPlazoRepository, TmpCargaTxtDepositoPlazoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtDepositoPlazoPIgnoradoRepository, TmpCargaTxtDepositoPlazoPIgnoradoRepository>();
+builder.Services.AddScoped<ITmpCargaTxtCreditoCalceRepository, TmpCargaTxtCreditoCalceRepository>();
+builder.Services.AddScoped<ITmpCargaExcelCreditoCalificacionesDefRepository, TmpCargaExcelCreditoCalificacionesDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelMaestroTcDefRepository, TmpCargaExcelMaestroTcDefRepository>();
 
 var app = builder.Build();
 

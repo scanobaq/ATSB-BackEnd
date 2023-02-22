@@ -22,6 +22,514 @@ namespace ATSB.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParCalificacionriesgo", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comp")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(2)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(2)");
+
+                    b.Property<string>("Fitch")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)");
+
+                    b.Property<string>("IdUsuario")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("idUsuario");
+
+                    b.Property<string>("Moody")
+                        .HasMaxLength(6)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(6)");
+
+                    b.Property<string>("Sp")
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("SP");
+
+                    b.HasKey("CodigoEmpresa", "Id");
+
+                    b.ToTable("PAR_CALIFICACIONRIESGO", (string)null);
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParConsecutivo", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int")
+                        .HasComment("1-Empresa");
+
+                    b.Property<string>("IdConsecutivo")
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("2-Id");
+
+                    b.Property<int>("NumeroConsecutivo")
+                        .HasColumnType("int")
+                        .HasComment("3-Descripción");
+
+                    b.HasKey("CodigoEmpresa", "IdConsecutivo");
+
+                    b.ToTable("PAR_CONSECUTIVO", (string)null);
+
+                    b.HasComment("Tabla ParConsecutivo");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int")
+                        .HasComment("1-Código");
+
+                    b.Property<int?>("CantidadModificaciones")
+                        .HasColumnType("int")
+                        .HasComment("0-NoAplica");
+
+                    b.Property<string>("CodigoBancoRegulador")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<int>("CodigoEstado")
+                        .HasColumnType("int")
+                        .HasComment("10-Estado");
+
+                    b.Property<int>("CodigoPais")
+                        .HasColumnType("int")
+                        .HasComment("5-País");
+
+                    b.Property<int>("CodigoTipoIdentificacion")
+                        .HasColumnType("int")
+                        .HasComment("3-Tipo Id");
+
+                    b.Property<DateTime>("FechaIngreso")
+                        .HasColumnType("datetime")
+                        .HasComment("8-Fecha Ingreso");
+
+                    b.Property<DateTime?>("FechaUltimaModificacion")
+                        .HasColumnType("datetime")
+                        .HasComment("11-Ultima Modificación");
+
+                    b.Property<string>("IdUsuario")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("idUsuario")
+                        .HasComment("9-Usuario Ingreso");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("2-Nombre");
+
+                    b.Property<string>("NumeroId")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("4-# Identificación");
+
+                    b.Property<string>("Telefono1")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("6-Teléfono");
+
+                    b.Property<string>("Telefono2")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("7-Teléfono");
+
+                    b.Property<string>("UsuarioModifica")
+                        .HasColumnType("text")
+                        .HasComment("12-Usuario Ultima Modficación");
+
+                    b.HasKey("CodigoEmpresa");
+
+                    b.HasIndex("CodigoEstado");
+
+                    b.HasIndex("CodigoPais");
+
+                    b.HasIndex("CodigoTipoIdentificacion", "CodigoPais");
+
+                    b.ToTable("PAR_EMPRESA", (string)null);
+
+                    b.HasComment("Tabla ParEmpresa");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParEstado", b =>
+                {
+                    b.Property<int>("CodigoEstado")
+                        .HasColumnType("int")
+                        .HasComment("1-Código");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("2-Descripción");
+
+                    b.HasKey("CodigoEstado");
+
+                    b.ToTable("PAR_ESTADO", (string)null);
+
+                    b.HasComment("Tabla ParEstado");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParMonedum", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoMoneda")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<string>("DescripcionCorta")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(3)");
+
+                    b.Property<string>("IdUsuario")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("idUsuario");
+
+                    b.HasKey("CodigoEmpresa", "CodigoMoneda");
+
+                    b.ToTable("PAR_MONEDA", (string)null);
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParPai", b =>
+                {
+                    b.Property<int>("CodigoPais")
+                        .HasColumnType("int")
+                        .HasComment("1-Código");
+
+                    b.Property<string>("CodigoIsoalfa2")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(2)")
+                        .HasColumnName("CodigoISOAlfa2")
+                        .HasComment("4-ISO Alfa2");
+
+                    b.Property<string>("CodigoIsoalfa3")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("CodigoISOAlfa3")
+                        .HasComment("5-ISO Alfa3");
+
+                    b.Property<int?>("CodigoIsonumerico")
+                        .HasColumnType("int")
+                        .HasColumnName("CodigoISONumerico")
+                        .HasComment("3-ISO Númerico");
+
+                    b.Property<string>("FormatoTelefonoCelular")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasComment("7-Formato Teléfono Celular");
+
+                    b.Property<string>("FormatoTelefonoFijo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasComment("6-Formato Teléfono Fijo");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("2-Nombre");
+
+                    b.HasKey("CodigoPais");
+
+                    b.ToTable("PAR_PAIS", (string)null);
+
+                    b.HasComment("Tabla ParPais");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParProceso", b =>
+                {
+                    b.Property<int>("CodigoProceso")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("NombreProceso")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasDefaultValueSql("('')");
+
+                    b.Property<string>("TablaDestino")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasDefaultValueSql("('')");
+
+                    b.HasKey("CodigoProceso", "CodigoEmpresa");
+
+                    b.HasIndex("CodigoEmpresa");
+
+                    b.ToTable("PAR_PROCESO", (string)null);
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParSucursal", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int")
+                        .HasComment("1-Empresa");
+
+                    b.Property<int>("CodigoBanco")
+                        .HasColumnType("int")
+                        .HasComment("10-Centro de Costo");
+
+                    b.Property<int>("CodigoSucursal")
+                        .HasColumnType("int")
+                        .HasComment("2-Código");
+
+                    b.Property<int?>("CargoResposable")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CodigoEstado")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodigoOrigen")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(3)")
+                        .HasComment("4-País");
+
+                    b.Property<int?>("CodigoPais")
+                        .HasColumnType("int")
+                        .HasComment("6-Cantón");
+
+                    b.Property<int?>("CodigoSubsidiaria")
+                        .HasColumnType("int")
+                        .HasComment("5-Provincia");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasComment("7-Dirección");
+
+                    b.Property<string>("Encargado")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasComment("8-Encargado");
+
+                    b.Property<string>("Fax")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("9-Teléfono");
+
+                    b.Property<string>("IdUsuario")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("idUsuario")
+                        .HasComment("0-No Aplica");
+
+                    b.Property<string>("NombreResponsable")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<string>("NombreSucursal")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasComment("3-Nombre");
+
+                    b.Property<string>("Telefono1")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("9-Teléfono");
+
+                    b.Property<string>("Telefono2")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("9-Teléfono");
+
+                    b.Property<int?>("TipoEstablecimiento")
+                        .HasColumnType("int")
+                        .HasComment("6-Cantón");
+
+                    b.HasKey("CodigoEmpresa", "CodigoBanco", "CodigoSucursal");
+
+                    b.HasIndex("CodigoEstado");
+
+                    b.ToTable("PAR_SUCURSAL", (string)null);
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipocambio", b =>
+                {
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<int>("CodigoMoneda")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("id");
+
+                    b.Property<double?>("TipoCambio")
+                        .HasColumnType("float");
+
+                    b.HasKey("CodigoEmpresa", "Fecha", "CodigoMoneda");
+
+                    b.HasIndex("CodigoEmpresa", "CodigoMoneda");
+
+                    b.ToTable("PAR_TIPOCAMBIO", (string)null);
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipoidentificacion", b =>
+                {
+                    b.Property<int>("CodigoTipoIdentificacion")
+                        .HasColumnType("int")
+                        .HasComment("2-Código");
+
+                    b.Property<int>("CodigoPais")
+                        .HasColumnType("int")
+                        .HasComment("1-País");
+
+                    b.Property<int?>("CantidadModificaciones")
+                        .HasColumnType("int")
+                        .HasComment("0-NoAplica");
+
+                    b.Property<string>("CodigoFacturaElectronica")
+                        .HasMaxLength(2)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(2)")
+                        .HasComment("9-Código Factura Electrónica");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("3-Descripcion");
+
+                    b.Property<DateTime?>("FechaUltimaModificacion")
+                        .HasColumnType("datetime")
+                        .HasComment("7-Ultima Modificación");
+
+                    b.Property<string>("Formato")
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)")
+                        .HasComment("4-Formato");
+
+                    b.Property<bool?>("IndicadorFisica")
+                        .HasColumnType("bit")
+                        .HasComment("6-Es Física");
+
+                    b.Property<int?>("Longitud")
+                        .HasColumnType("int")
+                        .HasComment("5-Longitud");
+
+                    b.Property<string>("UsuarioModifica")
+                        .HasColumnType("text")
+                        .HasComment("8-Usuario Modificación");
+
+                    b.HasKey("CodigoTipoIdentificacion", "CodigoPais");
+
+                    b.HasIndex("CodigoPais");
+
+                    b.ToTable("PAR_TIPOIDENTIFICACION", (string)null);
+
+                    b.HasComment("Tabla ParTipoIdentificacion");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipoorigendato", b =>
+                {
+                    b.Property<int>("CodigoOrigenDatos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DelimitadorDatos")
+                        .HasMaxLength(1)
+                        .IsUnicode(false)
+                        .HasColumnType("char(1)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("CodigoOrigenDatos", "CodigoEmpresa");
+
+                    b.HasIndex("CodigoEmpresa");
+
+                    b.ToTable("PAR_TIPOORIGENDATOS", (string)null);
+                });
+
             modelBuilder.Entity("ATSB.Api.Areas.Identity.Entities.Security.UserAtsb", b =>
                 {
                     b.Property<string>("Id")
@@ -34,6 +542,9 @@ namespace ATSB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Apellido2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodigoEmpresa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -281,6 +792,136 @@ namespace ATSB.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParCalificacionriesgo", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParCalificacionriesgos")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_CALIFICACIONRIESGO");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParConsecutivo", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParConsecutivos")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_CONSECUTIVO");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEstado", "CodigoEstadoNavigation")
+                        .WithMany("ParEmpresas")
+                        .HasForeignKey("CodigoEstado")
+                        .IsRequired()
+                        .HasConstraintName("PAR_ESTADO_PAR_EMPRESA");
+
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParPai", "CodigoPaisNavigation")
+                        .WithMany("ParEmpresas")
+                        .HasForeignKey("CodigoPais")
+                        .IsRequired()
+                        .HasConstraintName("PAR_PAIS_PAR_EMPRESA");
+
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParTipoidentificacion", "Codigo")
+                        .WithMany("ParEmpresas")
+                        .HasForeignKey("CodigoTipoIdentificacion", "CodigoPais")
+                        .IsRequired()
+                        .HasConstraintName("PAR_TIPOIDENTIFICACION_PAR_EMPRESA");
+
+                    b.Navigation("Codigo");
+
+                    b.Navigation("CodigoEstadoNavigation");
+
+                    b.Navigation("CodigoPaisNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParMonedum", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParMoneda")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_MONEDA");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParProceso", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParProcesos")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_PROCESO");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParSucursal", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParSucursals")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_SUCURSAL");
+
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEstado", "CodigoEstadoNavigation")
+                        .WithMany("ParSucursals")
+                        .HasForeignKey("CodigoEstado")
+                        .HasConstraintName("PAR_ESTADO_PAR_SUCURSAL");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+
+                    b.Navigation("CodigoEstadoNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipocambio", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParTipocambios")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_TIPOCAMBIO");
+
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParMonedum", "Codigo")
+                        .WithMany("ParTipocambios")
+                        .HasForeignKey("CodigoEmpresa", "CodigoMoneda")
+                        .IsRequired()
+                        .HasConstraintName("PAR_MONEDA_PAR_TIPOCAMBIO");
+
+                    b.Navigation("Codigo");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipoidentificacion", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParPai", "CodigoPaisNavigation")
+                        .WithMany("ParTipoidentificacions")
+                        .HasForeignKey("CodigoPais")
+                        .IsRequired()
+                        .HasConstraintName("PAR_PAIS_PAR_TIPOIDENTIFICACION");
+
+                    b.Navigation("CodigoPaisNavigation");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipoorigendato", b =>
+                {
+                    b.HasOne("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", "CodigoEmpresaNavigation")
+                        .WithMany("ParTipoorigendatos")
+                        .HasForeignKey("CodigoEmpresa")
+                        .IsRequired()
+                        .HasConstraintName("PAR_EMPRESA_PAR_TIPOORIGENDATOS");
+
+                    b.Navigation("CodigoEmpresaNavigation");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -330,6 +971,47 @@ namespace ATSB.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParEmpresa", b =>
+                {
+                    b.Navigation("ParCalificacionriesgos");
+
+                    b.Navigation("ParConsecutivos");
+
+                    b.Navigation("ParMoneda");
+
+                    b.Navigation("ParProcesos");
+
+                    b.Navigation("ParSucursals");
+
+                    b.Navigation("ParTipocambios");
+
+                    b.Navigation("ParTipoorigendatos");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParEstado", b =>
+                {
+                    b.Navigation("ParEmpresas");
+
+                    b.Navigation("ParSucursals");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParMonedum", b =>
+                {
+                    b.Navigation("ParTipocambios");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParPai", b =>
+                {
+                    b.Navigation("ParEmpresas");
+
+                    b.Navigation("ParTipoidentificacions");
+                });
+
+            modelBuilder.Entity("ATSB.Api.Areas.Entities.Parametros.ParTipoidentificacion", b =>
+                {
+                    b.Navigation("ParEmpresas");
                 });
 #pragma warning restore 612, 618
         }

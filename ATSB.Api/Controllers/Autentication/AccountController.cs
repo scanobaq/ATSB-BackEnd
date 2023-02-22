@@ -59,7 +59,9 @@ namespace ATSB.Controllers
                     Apellido1 = user.Apellido1,
                     Apellido2 = user.Apellido2,
                     Nombre = user.Nombre,
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    CodigoEmpresa = user.CodigoEmpresa
+
                 };
                 response.IsSuccess = true;
                 response.Message = "Usuario autenticado";
