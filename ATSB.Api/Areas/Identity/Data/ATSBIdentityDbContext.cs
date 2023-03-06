@@ -74,6 +74,14 @@ namespace ATSB.Api.Areas.Identity.Data
         public virtual DbSet<TmpCargaExcelCreditoCalificacionesDef> TmpCargaExcelCreditoCalificacionesDefs { get; set; }
         public virtual DbSet<TmpCargaExcelMaestroTcDef> TmpCargaExcelMaestroTcDefs { get; set; }
         public virtual DbSet<TmpCargaTxtCreditocalce> TmpCargaTxtCreditocalces { get; set; }
+        public virtual DbSet<TmpCargaExcelInversionesCalificacione> TmpCargaExcelInversionesCalificaciones { get; set; }
+        public virtual DbSet<TmpCargaExcelCreditoCalificacione> TmpCargaExcelCreditoCalificaciones { get; set; }
+        public virtual DbSet<TmpCargaExcelInversione> TmpCargaExcelInversiones { get; set; }
+        public virtual DbSet<TmpCargaExcelMaestroTc> TmpCargaExcelMaestroTcs { get; set; }
+        public virtual DbSet<TmpCargaExcelInversionesCalificacionesDef> TmpCargaExcelInversionesCalificacionesDefs { get; set; }
+        public virtual DbSet<TmpCargaExcelCalificionriesgopaisDef> TmpCargaExcelCalificionriesgopaisDefs { get; set; }
+        public virtual DbSet<TmpCargaExcelInversionesDef> TmpCargaExcelInversionesDefs { get; set; }
+        public virtual DbSet<TmpCargaExcelCalificionriesgopai> TmpCargaExcelCalificionriesgopais { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1781,6 +1789,965 @@ namespace ATSB.Api.Areas.Identity.Data
                     .WithMany(p => p.TmpCargaTxtCreditocalces)
                     .HasForeignKey(d => new { d.CodigoProceso, d.CodigoEmpresa })
                     .HasConstraintName("PAR_PROCESO_TMP_CARGA_TXT_CREDITOCALCE");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelInversionesCalificacione>(entity =>
+            {
+                entity.HasKey(e => e.CodigoIsin);
+
+                entity.ToTable("TMP_CARGA_EXCEL_INVERSIONES_CALIFICACIONES");
+
+                entity.Property(e => e.CodigoIsin)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CodigoISIN");
+
+                entity.Property(e => e.CalifFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch");
+
+                entity.Property(e => e.CalifFitchFcltDebt1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_FCLT_Debt");
+
+                entity.Property(e => e.CalifFitchFcltdebt)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_FCLTDebt");
+
+                entity.Property(e => e.CalifFitchForCurLtdebtNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_ForCurLTDebt_No");
+
+                entity.Property(e => e.CalifFitchNatEmisorNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_Nat_EMISOR_No");
+
+                entity.Property(e => e.CalifFitchNatNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_Nat_No");
+
+                entity.Property(e => e.CalifFitchNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_National");
+
+                entity.Property(e => e.CalifFitchNationalEmisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_National_EMISOR");
+
+                entity.Property(e => e.CalifFitchNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_No");
+
+                entity.Property(e => e.CalifMoodyFcCurrissuerRatNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moody_FC_CurrissuerRat_No");
+
+                entity.Property(e => e.CalifMoodyLtcountRikAssNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moody_LTCountRikAss_No");
+
+                entity.Property(e => e.CalifMoodyNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moody_No");
+
+                entity.Property(e => e.CalifMoodys)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys");
+
+                entity.Property(e => e.CalifMoodysFccurlR)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_FCCurlR");
+
+                entity.Property(e => e.CalifMoodysFccurlRating)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_FCCurlRating");
+
+                entity.Property(e => e.CalifMoodysLtCounterpartyRa)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_LT_CounterpartyRA");
+
+                entity.Property(e => e.CalifMoodysLtcra)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_LTCRA");
+
+                entity.Property(e => e.CalifSpFcurLtdebt)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_FCurLTDebt");
+
+                entity.Property(e => e.CalifSpFcurLtdebt1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_FCurLTDebt1");
+
+                entity.Property(e => e.CalifSpForCurLtdebtNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_ForCurLTDebt_No");
+
+                entity.Property(e => e.CalifSpInternational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_International");
+
+                entity.Property(e => e.CalifSpNatNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_Nat_No");
+
+                entity.Property(e => e.CalifSpNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_National");
+
+                entity.Property(e => e.CalifSpNo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_No");
+
+                entity.Property(e => e.CalificacionFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch");
+
+                entity.Property(e => e.CalificacionFitchNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch_National");
+
+                entity.Property(e => e.CalificacionFitchNationalEmisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch_National_EMISOR");
+
+                entity.Property(e => e.CalificacionMoodys)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Moodys");
+
+                entity.Property(e => e.CalificacionSp)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_SP");
+
+                entity.Property(e => e.CalificacionSpNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_SP_National");
+
+                entity.Property(e => e.CodEmisorBloomberg)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryOfRisk)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryOfRisk1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Emisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Fecha)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Instrumento)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Libro)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MontoNominal)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pais)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pais1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Producto)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TmpCargaExcelCreditoCalificacione>(entity =>
+            {
+                entity.HasKey(e => e.NumOper)
+                    .HasName("PK__TMP_CARG__321F9204E1F59647");
+
+                entity.ToTable("TMP_CARGA_EXCEL_CREDITO_CALIFICACIONES");
+
+                entity.Property(e => e.NumOper)
+                    .HasMaxLength(255)
+                    .HasColumnName("num_oper");
+
+                entity.Property(e => e.ClasPres)
+                    .HasMaxLength(255)
+                    .HasColumnName("Clas_Pres");
+
+                entity.Property(e => e.FechaCarga)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Carga");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelInversione>(entity =>
+            {
+                entity.HasKey(e => e.Llave)
+                    .HasName("PK__TMP_CARG__8E70B293454DBDAB");
+
+                entity.ToTable("TMP_CARGA_EXCEL_INVERSIONES");
+
+                entity.Property(e => e.Llave)
+                    .HasDefaultValueSql("(newid())")
+                    .HasComment("0-NA");
+
+                entity.Property(e => e.BancoRelacion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Banco_Relacion")
+                    .HasComment("11-Banco Relación");
+
+                entity.Property(e => e.CodBanco)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COD_BANCO")
+                    .HasComment("2-Código Banco");
+
+                entity.Property(e => e.CodRegion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Cod_Region")
+                    .HasComment("10-Código Región");
+
+                entity.Property(e => e.CodRubro)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Cod_Rubro")
+                    .HasComment("4-Código Rubro");
+
+                entity.Property(e => e.CodSubsidiaria)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("COD_SUBSIDIARIA")
+                    .HasComment("3-Código Subsidiaria");
+
+                entity.Property(e => e.Cupon)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("23-Cupón");
+
+                entity.Property(e => e.Destino)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasComment("9-Destino");
+
+                entity.Property(e => e.Ente)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ente")
+                    .HasComment("8-Ente");
+
+                entity.Property(e => e.EscaladaFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_Fitch")
+                    .HasComment("24-Escalada Fitch");
+
+                entity.Property(e => e.EscaladaMoody)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_Moody")
+                    .HasComment("25-Escalada Moody");
+
+                entity.Property(e => e.EscaladaSp)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_SP")
+                    .HasComment("26-Escalada SP");
+
+                entity.Property(e => e.Fecha)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FECHA")
+                    .HasComment("1-Fecha");
+
+                entity.Property(e => e.FechaAdquisicion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Adquisicion")
+                    .HasComment("6-Fecha Adquisición");
+
+                entity.Property(e => e.FechaEmision)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Emision")
+                    .HasComment("5-Fecha Emisión");
+
+                entity.Property(e => e.FechaVencimiento)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Vencimiento")
+                    .HasComment("7-Fecha Vencimiento");
+
+                entity.Property(e => e.Garante)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("garante")
+                    .HasComment("16-Garante");
+
+                entity.Property(e => e.InstrObligacion)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Instr_Obligacion")
+                    .HasComment("12-Instr Obligación");
+
+                entity.Property(e => e.IntXCobrar)
+                    .HasMaxLength(255)
+                    .HasColumnName("Int_x_cobrar")
+                    .HasComment("21-Interés Por Cobrar");
+
+                entity.Property(e => e.RiesgoFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_Fitch")
+                    .HasComment("13-Riesgo Fitch");
+
+                entity.Property(e => e.RiesgoMoody)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_Moody")
+                    .HasComment("14-Riesgo Moody");
+
+                entity.Property(e => e.RiesgoSp)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_SP")
+                    .HasComment("15-Riesgo SP");
+
+                entity.Property(e => e.Tasa)
+                    .HasMaxLength(255)
+                    .HasComment("20-Tasa");
+
+                entity.Property(e => e.Ticket)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("22-Ticket");
+
+                entity.Property(e => e.ValLibros)
+                    .HasMaxLength(255)
+                    .HasColumnName("Val_Libros")
+                    .HasComment("17-Valor Libros");
+
+                entity.Property(e => e.ValNominal)
+                    .HasMaxLength(255)
+                    .HasColumnName("Val_Nominal")
+                    .HasComment("18-Valor Nominal");
+
+                entity.Property(e => e.ValorMercado)
+                    .HasMaxLength(255)
+                    .HasColumnName("Valor_Mercado")
+                    .HasComment("19-Valor Mercado");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelMaestroTc>(entity =>
+            {
+                entity.HasKey(e => e.NumeroTarjeta)
+                    .HasName("PK__TMP_CARG__BC163C0B2D4E715F");
+
+                entity.ToTable("TMP_CARGA_EXCEL_MAESTRO_TC");
+
+                entity.Property(e => e.NumeroTarjeta).HasMaxLength(255);
+
+                entity.Property(e => e.Cargo).HasMaxLength(255);
+
+                entity.Property(e => e.Centalta).HasMaxLength(255);
+
+                entity.Property(e => e.CodigoCliente).HasMaxLength(255);
+
+                entity.Property(e => e.Contrato).HasMaxLength(255);
+
+                entity.Property(e => e.CupoGlobal).HasMaxLength(255);
+
+                entity.Property(e => e.EstadoTarjeta).HasMaxLength(255);
+
+                entity.Property(e => e.FechaEmision).HasMaxLength(255);
+
+                entity.Property(e => e.FechaVencimiento).HasMaxLength(255);
+
+                entity.Property(e => e.Identificacion).HasMaxLength(255);
+
+                entity.Property(e => e.InteresExtracontable).HasMaxLength(255);
+
+                entity.Property(e => e.InteresXfinanciamiento).HasMaxLength(255);
+
+                entity.Property(e => e.Intereses).HasMaxLength(255);
+
+                entity.Property(e => e.InteresesMora).HasMaxLength(255);
+
+                entity.Property(e => e.NombreCliente).HasMaxLength(255);
+
+                entity.Property(e => e.SaldoAFavor)
+                    .HasMaxLength(255)
+                    .HasColumnName("Saldo_a_Favor");
+
+                entity.Property(e => e.SaldoCapital).HasMaxLength(255);
+
+                entity.Property(e => e.SaldoTotal).HasMaxLength(255);
+
+                entity.Property(e => e.TasaIntereses).HasMaxLength(255);
+
+                entity.Property(e => e.TcRelacionada).HasMaxLength(255);
+
+                entity.Property(e => e.TipoIdentificacion).HasMaxLength(255);
+
+                entity.Property(e => e.TipoProducto).HasMaxLength(255);
+
+                entity.Property(e => e.TipoTarjeta).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<TmpCargaExcelInversionesCalificacionesDef>(entity =>
+            {
+                entity.HasKey(e => e.CodigoIsin)
+                    .HasName("PK_TMP_EXCEL_TBLRATING_INVERSIONES_CodigoISIN");
+
+                entity.ToTable("TMP_CARGA_EXCEL_INVERSIONES_CALIFICACIONES_DEF");
+
+                entity.Property(e => e.CodigoIsin)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CodigoISIN");
+
+                entity.Property(e => e.CalifFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch");
+
+                entity.Property(e => e.CalifFitchFcltDebt1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_FCLT_Debt");
+
+                entity.Property(e => e.CalifFitchFcltdebt)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_FCLTDebt");
+
+                entity.Property(e => e.CalifFitchForCurLtdebtNo).HasColumnName("Calif_Fitch_ForCurLTDebt_No");
+
+                entity.Property(e => e.CalifFitchNatEmisorNo).HasColumnName("Calif_Fitch_Nat_EMISOR_No");
+
+                entity.Property(e => e.CalifFitchNatNo).HasColumnName("Calif_Fitch_Nat_No");
+
+                entity.Property(e => e.CalifFitchNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_National");
+
+                entity.Property(e => e.CalifFitchNationalEmisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Fitch_National_EMISOR");
+
+                entity.Property(e => e.CalifFitchNo).HasColumnName("Calif_Fitch_No");
+
+                entity.Property(e => e.CalifMoodyFcCurrIssuerRatNo).HasColumnName("Calif_Moody_FC_CurrIssuerRat_No");
+
+                entity.Property(e => e.CalifMoodyFccurIr)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moody_FCCurIR");
+
+                entity.Property(e => e.CalifMoodyLtcountRikAssNo).HasColumnName("Calif_Moody_LTCountRikAss_No");
+
+                entity.Property(e => e.CalifMoodyNo).HasColumnName("Calif_Moody_No");
+
+                entity.Property(e => e.CalifMoodys)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys");
+
+                entity.Property(e => e.CalifMoodysFccurIrating)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_FCCurIRating");
+
+                entity.Property(e => e.CalifMoodysLtCounterpartyRa)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_LT_CounterpartyRA");
+
+                entity.Property(e => e.CalifMoodysLtcra)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_Moodys_LTCRA");
+
+                entity.Property(e => e.CalifSpFcurLtdebt)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_FCurLTDebt");
+
+                entity.Property(e => e.CalifSpFcurLtdebt1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_FCurLTDebt1");
+
+                entity.Property(e => e.CalifSpForCurLtdebtNo).HasColumnName("Calif_SP_ForCurLTDebt_No");
+
+                entity.Property(e => e.CalifSpInternational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calif_SP_International");
+
+                entity.Property(e => e.CalifSpNatNo).HasColumnName("Calif_SP_Nat_No");
+
+                entity.Property(e => e.CalifSpNo).HasColumnName("Calif_SP_No");
+
+                entity.Property(e => e.CalifiSpNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Califi_SP_National");
+
+                entity.Property(e => e.CalificacionFitch)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch");
+
+                entity.Property(e => e.CalificacionFitchNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch_National");
+
+                entity.Property(e => e.CalificacionFitchNationalEmisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Fitch_National_EMISOR");
+
+                entity.Property(e => e.CalificacionMoodys)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_Moodys");
+
+                entity.Property(e => e.CalificacionSp)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_SP");
+
+                entity.Property(e => e.CalificacionSpNational)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Calificacion_SP_National");
+
+                entity.Property(e => e.CodEmisorBloomberg)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryOfRisk)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryOfRisk1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Emisor)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Fecha).HasColumnType("datetime");
+
+                entity.Property(e => e.Instrumento)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Libro)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pais)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.País1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Producto)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TmpCargaExcelCalificionriesgopaisDef>(entity =>
+            {
+                entity.HasKey(e => e.Llave)
+                    .HasName("PK__TMP_CARG__8E70B293CA532666");
+
+                entity.ToTable("TMP_CARGA_EXCEL_CALIFICIONRIESGOPAIS_DEF");
+
+                entity.Property(e => e.Llave)
+                    .HasDefaultValueSql("(newid())")
+                    .HasComment("0-NA");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("1-Entity Name");
+
+                entity.Property(e => e.FitchFechaUltAct)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Fecha_Ult_Act")
+                    .HasComment("3-Fitch Fecha Ultima Actualización");
+
+                entity.Property(e => e.FitchPerspectiva)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Perspectiva")
+                    .HasComment("4-Fitch Perspectiva");
+
+                entity.Property(e => e.FitchRiesgo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Riesgo")
+                    .HasComment("2-Fitch Riesgo");
+
+                entity.Property(e => e.MoodyFechaUltActFc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Fecha_Ult_Act_fc")
+                    .HasComment("6-Moody Fecha Ultima Actualización");
+
+                entity.Property(e => e.MoodyFechaUltActLc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Fecha_Ult_Act_lc")
+                    .HasComment("8-Moody Fecha Ultima Actualización lc");
+
+                entity.Property(e => e.MoodyPerspectiva)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Perspectiva")
+                    .HasComment("9-Moody Perspectiva");
+
+                entity.Property(e => e.MoodyRiesgoFc)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Riesgo_fc")
+                    .HasComment("5-Moody Riesgo fc");
+
+                entity.Property(e => e.MoodyRiesgoLc)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Riesgo_lc")
+                    .HasComment("7-Moody Riesgo lc");
+
+                entity.Property(e => e.SpFechaUltActFc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Fecha_Ult_Act_fc")
+                    .HasComment("11-SP Fecha Ultima Actualización fc");
+
+                entity.Property(e => e.SpFechaUltActLc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Fecha_Ult_Act_lc")
+                    .HasComment("13-SP Fecha Ultima Actualización lc");
+
+                entity.Property(e => e.SpPerspectiva)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Perspectiva")
+                    .HasComment("14-SP Perspectiva");
+
+                entity.Property(e => e.SpRiesgoFc)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Riesgo_fc")
+                    .HasComment("10-SP Riesgo fc");
+
+                entity.Property(e => e.SpRiesgoLc)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Riesgo_lc")
+                    .HasComment("12-SP Riesgo lc");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelInversionesDef>(entity =>
+            {
+                entity.HasKey(e => e.Llave)
+                    .HasName("PK__TMP_CARG__8E70B293949D8375");
+
+                entity.ToTable("TMP_CARGA_EXCEL_INVERSIONES_DEF");
+
+                entity.Property(e => e.Llave)
+                    .HasDefaultValueSql("(newid())")
+                    .HasComment("0-NA");
+
+                entity.Property(e => e.BancoRelacion)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("Banco_Relacion")
+                    .HasComment("11-Banco Relación");
+
+                entity.Property(e => e.CodBanco)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("COD_BANCO")
+                    .HasComment("2-Código Banco");
+
+                entity.Property(e => e.CodRegion)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("Cod_Region")
+                    .HasComment("10-Código Región");
+
+                entity.Property(e => e.CodRubro)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Cod_Rubro")
+                    .HasComment("4-Código Rubro");
+
+                entity.Property(e => e.CodSubsidiaria)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("COD_SUBSIDIARIA")
+                    .HasComment("3-Código Subsidiaria");
+
+                entity.Property(e => e.Cupon)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasComment("23-Cupón");
+
+                entity.Property(e => e.Destino)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength()
+                    .HasComment("9-Destino");
+
+                entity.Property(e => e.Ente)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ente")
+                    .HasComment("8-Ente");
+
+                entity.Property(e => e.EscaladaFitch)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_Fitch")
+                    .HasComment("24-Escalada Fitch");
+
+                entity.Property(e => e.EscaladaMoody)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_Moody")
+                    .HasComment("25-Escalada Moody");
+
+                entity.Property(e => e.EscaladaSp)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("Escalada_SP")
+                    .HasComment("26-Escalada SP");
+
+                entity.Property(e => e.Fecha)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("FECHA")
+                    .HasComment("1-Fecha");
+
+                entity.Property(e => e.FechaAdquisicion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Adquisicion")
+                    .HasComment("6-Fecha Adquisición");
+
+                entity.Property(e => e.FechaEmision)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Emision")
+                    .HasComment("5-Fecha Emisión");
+
+                entity.Property(e => e.FechaVencimiento)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Fecha_Vencimiento")
+                    .HasComment("7-Fecha Vencimiento");
+
+                entity.Property(e => e.Garante)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("garante")
+                    .HasComment("16-Garante");
+
+                entity.Property(e => e.InstrObligacion)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Instr_Obligacion")
+                    .HasComment("12-Instr Obligación");
+
+                entity.Property(e => e.IntXCobrar)
+                    .HasColumnName("Int_x_cobrar")
+                    .HasComment("21-Interés por Cobrar");
+
+                entity.Property(e => e.RiesgoFitch)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_Fitch")
+                    .HasComment("13-Riesgo Fitch");
+
+                entity.Property(e => e.RiesgoMoody)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_Moody")
+                    .HasComment("14-Riesgo Moody");
+
+                entity.Property(e => e.RiesgoSp)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Riesgo_SP")
+                    .HasComment("15-Riesgo SP");
+
+                entity.Property(e => e.Tasa).HasComment("20-Tasa");
+
+                entity.Property(e => e.Ticket)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("22-Ticket");
+
+                entity.Property(e => e.ValLibros)
+                    .HasColumnName("Val_Libros")
+                    .HasComment("17-Valor Libros");
+
+                entity.Property(e => e.ValNominal)
+                    .HasColumnName("Val_Nominal")
+                    .HasComment("18-Valor Nominal");
+
+                entity.Property(e => e.ValorMercado)
+                    .HasColumnName("Valor_Mercado")
+                    .HasComment("19-Valor Mercado");
+            });
+
+            modelBuilder.Entity<TmpCargaExcelCalificionriesgopai>(entity =>
+            {
+                entity.HasKey(e => e.Llave)
+                    .HasName("PK__TMP_CARG__B8B4879FC4FF94B7");
+
+                entity.ToTable("TMP_CARGA_EXCEL_CALIFICIONRIESGOPAIS");
+
+                entity.Property(e => e.Llave)
+                    .HasColumnName("llave")
+                    .HasDefaultValueSql("(newid())")
+                    .HasComment("0-NA");
+
+                entity.Property(e => e.EntityName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("1-Entity Name");
+
+                entity.Property(e => e.FitchFechaUltAct)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Fecha_Ult_Act")
+                    .HasComment("3-Fitch Fecha Ultima Actualización");
+
+                entity.Property(e => e.FitchPerspectiva)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Perspectiva")
+                    .HasComment("4-Fitch Perspectiva");
+
+                entity.Property(e => e.FitchRiesgo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Fitch_Riesgo")
+                    .HasComment("2-Riesgo Fitch");
+
+                entity.Property(e => e.MoodyFechaUltActFc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Fecha_Ult_Act_fc")
+                    .HasComment("6-Moody Fecha Ultima Actualización fc");
+
+                entity.Property(e => e.MoodyFechaUltActLc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Fecha_Ult_Act_lc")
+                    .HasComment("8-Moody Fecha Ultima Actualización lc");
+
+                entity.Property(e => e.MoodyPerspectiva)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Perspectiva")
+                    .HasComment("9-Moody Perspectiva");
+
+                entity.Property(e => e.MoodyRiesgoFc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Riesgo_fc")
+                    .HasComment("5-Moody Riesgo fc");
+
+                entity.Property(e => e.MoodyRiesgoLc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Moody_Riesgo_lc")
+                    .HasComment("7-Moody Riesgo lc");
+
+                entity.Property(e => e.SpFechaUltActFc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Fecha_Ult_Act_fc")
+                    .HasComment("11-SP Fecha Ultima Actualización fc");
+
+                entity.Property(e => e.SpFechaUltActLc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Fecha_Ult_Act_lc")
+                    .HasComment("13-SP Fecha Ultima Actualización lc");
+
+                entity.Property(e => e.SpPerspectiva)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Perspectiva")
+                    .HasComment("14-SP Perspectiva");
+
+                entity.Property(e => e.SpRiesgoFc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Riesgo_fc")
+                    .HasComment("10-SP Riesgo fc");
+
+                entity.Property(e => e.SpRiesgoLc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SP_Riesgo_lc")
+                    .HasComment("12-SP Riesgo lc");
             });
 
             OnModelCreatingPartial(modelBuilder);
