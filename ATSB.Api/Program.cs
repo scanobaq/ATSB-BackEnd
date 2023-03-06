@@ -111,6 +111,14 @@ builder.Services.AddScoped<ITmpCargaTxtDepositoPlazoPIgnoradoRepository, TmpCarg
 builder.Services.AddScoped<ITmpCargaTxtCreditoCalceRepository, TmpCargaTxtCreditoCalceRepository>();
 builder.Services.AddScoped<ITmpCargaExcelCreditoCalificacionesDefRepository, TmpCargaExcelCreditoCalificacionesDefRepository>();
 builder.Services.AddScoped<ITmpCargaExcelMaestroTcDefRepository, TmpCargaExcelMaestroTcDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelInversionesCalificacionesRepository, TmpCargaExcelInversionesCalificacionesRepository>();
+builder.Services.AddScoped<ITmpCargaExcelCreditoCalificacionesRepository, TmpCargaExcelCreditoCalificacionesRepository>();
+builder.Services.AddScoped<ITmpCargaExcelInversionesRepository, TmpCargaExcelInversionesRepository>();
+builder.Services.AddScoped<ITmpCargaExcelMaestroTcRepository, TmpCargaExcelMaestroTcRepository>();
+builder.Services.AddScoped<ITmpCargaExcelInversionesCalificacionesDefRepository, TmpCargaExcelInversionesCalificacionesDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelCalificionRiesgoPaisDefRepository, TmpCargaExcelCalificionRiesgoPaisDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelInversionesDefRepository, TmpCargaExcelInversionesDefRepository>();
+builder.Services.AddScoped<ITmpCargaExcelCalificionRiesgoPaisRepository, TmpCargaExcelCalificionRiesgoPaisRepository>();
 
 var app = builder.Build();
 
