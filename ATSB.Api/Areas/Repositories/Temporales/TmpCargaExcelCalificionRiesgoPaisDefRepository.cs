@@ -14,12 +14,12 @@ using ATSB.Api.Areas.Entities.Temporales;
 
 namespace ATSB.Api.Areas.Repositories.Temporales
 {
-    public class TmpCargaExcelCreditoCalificacionesDefRepository : ITmpCargaExcelCreditoCalificacionesDefRepository
+    public class TmpCargaExcelCalificionRiesgoPaisDefRepository : ITmpCargaExcelCalificionRiesgoPaisDefRepository
     {
         private readonly ATSBIdentityDbContext _context;
         private readonly IConsecutivoHelper _ConsecutivoHelper;
 
-        public TmpCargaExcelCreditoCalificacionesDefRepository
+        public TmpCargaExcelCalificionRiesgoPaisDefRepository
         (
             ATSBIdentityDbContext context,
             IConsecutivoHelper ConsecutivoHelper
@@ -30,18 +30,17 @@ namespace ATSB.Api.Areas.Repositories.Temporales
             _ConsecutivoHelper = ConsecutivoHelper;
         }
 
-        public IQueryable GetTmpCargaExcelCreditosCalificacionesDef()
+        public IQueryable GetTmpCargaExcelCalificionesRiesgoPaisDef()
         {
-            return _context.TmpCargaExcelCreditoCalificacionesDefs
+            return _context.TmpCargaExcelCalificionriesgopaisDefs
                 .AsNoTracking();
         }
 
-        public async Task<TmpCargaExcelCreditoCalificacionesDef> GetTmpCargaExcelCreditoCalificacionesDefAsync(string NumOper)
+        public async Task<TmpCargaExcelCalificionriesgopaisDef> GetTmpCargaExcelCalificionRiesgoPaisDefAsync(Guid Llave)
         {
-            return await _context.TmpCargaExcelCreditoCalificacionesDefs.Where(x => x.NumOper == NumOper)
+            return await _context.TmpCargaExcelCalificionriesgopaisDefs.Where(x => x.Llave == Llave)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
-
     }
 }

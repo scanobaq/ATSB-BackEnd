@@ -14,12 +14,12 @@ using ATSB.Api.Areas.Entities.Temporales;
 
 namespace ATSB.Api.Areas.Repositories.Temporales
 {
-    public class TmpCargaExcelCreditoCalificacionesDefRepository : ITmpCargaExcelCreditoCalificacionesDefRepository
+    public class TmpCargaExcelInversionesCalificacionesRepository : ITmpCargaExcelInversionesCalificacionesRepository
     {
         private readonly ATSBIdentityDbContext _context;
         private readonly IConsecutivoHelper _ConsecutivoHelper;
 
-        public TmpCargaExcelCreditoCalificacionesDefRepository
+        public TmpCargaExcelInversionesCalificacionesRepository
         (
             ATSBIdentityDbContext context,
             IConsecutivoHelper ConsecutivoHelper
@@ -30,18 +30,17 @@ namespace ATSB.Api.Areas.Repositories.Temporales
             _ConsecutivoHelper = ConsecutivoHelper;
         }
 
-        public IQueryable GetTmpCargaExcelCreditosCalificacionesDef()
+        public IQueryable GetListaTmpCargaExcelInversionesCalificaciones()
         {
-            return _context.TmpCargaExcelCreditoCalificacionesDefs
+            return _context.TmpCargaExcelInversionesCalificaciones
                 .AsNoTracking();
         }
 
-        public async Task<TmpCargaExcelCreditoCalificacionesDef> GetTmpCargaExcelCreditoCalificacionesDefAsync(string NumOper)
+        public async Task<TmpCargaExcelInversionesCalificacione> GetTmpCargaExcelInversionesCalificacionesAsync(string CodigoISIN)
         {
-            return await _context.TmpCargaExcelCreditoCalificacionesDefs.Where(x => x.NumOper == NumOper)
+            return await _context.TmpCargaExcelInversionesCalificaciones.Where(x => x.CodigoIsin == CodigoISIN)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
-
     }
 }
